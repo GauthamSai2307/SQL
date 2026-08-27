@@ -1,0 +1,41 @@
+Client-Server Architecture:
+
+                          CLIENT–SERVER ARCHITECTURE
+                                      |
+                    +-----------------+-----------------+
+                    |                                   |
+                    |                                   |
+                 CLIENT                              SERVER
+                    |                                   |
+    ┌───────────────┴───────────────┐   ┌───────────────┴────────────────┐
+    │                               │   │                                │
+    │ • Sends requests to Server    │   │ • Takes requests from Clients  │
+    │                               │   │                                │
+    │ • Receives response from      │   │ • Checks whether request is    │
+    │   Server                      │   │   valid                        │
+    │                               │   │                                │
+    └───────────────────────────────┘   │ • Valid request → Generates    │
+                    │                   │   response and sends it to     │
+                    │                   │   Client                       │
+                    │                   │                                │
+                    │                   │ • Invalid request → Raises     │
+                    │                   │   an error                     │
+                    │                   └────────────────────────────────┘
+                    │                                   ▲
+                    │                                   │
+                    │       REQUEST                     │
+                    ├──────────────────────────────────►│
+                    │                                   │
+                    │       RESPONSE                    │
+                    │◄──────────────────────────────────┤
+                    │                                   │
+                    └──────────── PROTOCOL ─────────────┘
+                              (Set of Rules)
+                Controls communication between Client and Server
+
+
+Client → Request → Protocol → Server → Response/Error → Client.
+
+Installation Process
+username : root
+Password : GauthamSai@2365
