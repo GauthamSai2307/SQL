@@ -1,0 +1,162 @@
+                         Full Stack Engineer
+                                  |
+                                  |
+                    +-------------+-------------+
+                    |                           |
+                    |                           |
+               Front End                    Back End
+
+
+Front-End: 
+
+It is the visual or the UI layer of a website or an application where the users directly see 
+and interact with the application through the website buttons or the mobile
+
+Responsibilities Of Front-End :
+
+1. Displays the webpages and the user interface
+2. Accept user inputs (forms, buttons, search boxes)
+3. Validates the user inputs before sent to the server
+4. Calls the backend API's to retrieve the data for the request made by the client
+5. Displays the respones received for the user request
+6. Provides animations and the interactive effects to the interface designed
+
+Back-End:
+
+It is the server side part of the application and users can not see them directly, 
+but it performs all the business logic, security and data processing and database operations.
+
+Responsibilities Of Back-End :
+
+1. Process Client Requests
+2. Implements the business logic
+3. Connects with the databases
+4. Performs CRUD operations
+5. Authenticates and Authorizes users
+6. Encrypts passwords and sensitive data
+7. Generates reports
+8. Sends emails and notifications
+9. Handles file uploads and the downloads
+10. Returns the respones to the client 
+
+
+API ( Application Programming Interface ):
+
+An API is a set of rules and the protocols that allows two different applications ot the systems to 
+communicate and exchange the data in between them without explicitly exposing the data and this process is done by internal implementation
+
+It acts as a bridge between the front-end and the back-end or two different software systems
+
+
+┌──────────────────────────────────┐          ┌──────────────────────────────────┐
+│            Front-End             │          │             Back-End             │
+├──────────────────────────────────┤          ├──────────────────────────────────┤
+│                                  │          │                                  │
+│ All Products                     │          │ @GetMapping("/Products")         │
+│                                  │          │ ViewProduct() {                  │
+│ https://localhost:3000/Products  │          │                                  │
+│              │                   │          │                                  │
+│              │  GET /Products    │          │                                  │
+│              └─────────────────────────────►│                                  │
+│                                  │          │     // Displaying the products   │
+│                                  │          │     // present in the database   │
+│                                  │          │     // at backend                │
+│                                  │          │ }                                │
+└──────────────────────────────────┘          └──────────────────────────────────┘
+
+Storage Areas:
+
+As part of our application requirements we need to store the different types of the informations (billing, calls, user) 
+to do that we need a storage areas
+
+There are 2 types of Storage Areas:
+
+1. Temporary Storage Areas : These are the memory areas where the data will be stored temporarily 
+   Examples : All JVM memories (Heap, Stack) once JVM is shutdown all the memory areas will be cleared automatically
+
+2. Permanent Storage Areas : These are also known as " Persistent Storage Areas ", we store the data permanently
+   Examples : File Systems, Databases, Data Warehouses, Big Data, etc
+
+
+File Management System (FMS):
+
+A File Management System is a system where data is stored in the file formats on the Operating Systems and each application program 
+must handle its own storage data retrieval and updating. File systems can be provided by the local Operating System.
+These are best suitable for to store very less amount of information ( like KB )
+
+Example : A Library Management Systems storing data in various seperate text files like books.txt, members.txt
+
+Limitations of FMS:
+
+1. Data Redundancy : Same data stored in the multiple files
+2. Data Inconsistancy : Updates in one file may not be reflected in another file
+3. Poor Data Security : No proper accessed control
+4. Difficult Data Retrieval : Searching requires custom programs
+5. Integrity Issues : No constraints (Example : Roll number must be unique)
+6. Scalability Issues : Hard to manange as the data size increases
+
+To overcome these above mentioned problems wer should go for the databases
+
+Database Management System (DBMS):
+
+A Database Management System is a collection of programs that enables the user to create, manage and manipulate the data which is stored in the databases
+
+Advanatages of DBMS :
+
+1. We can store huge amount of information inside the databases
+2. Query Language support is available for every database hence we can perform dat operations easily
+3. To access the data present in the database, security like username and passwords are required
+
+Limitations of DBMS :
+
+1. Databases can't store very huge amount of the information like Terabytes of data
+2. Databases can provide support for only the structured data (Tabular or Relational) and cannot provide support for Semi structured data (XML files) , audios and vidoes
+
+
+FMS vs DBMS (Interview Question):
+
+┌────────────────────────────────────┬────────────────────────────────────┐
+│            FILE SYSTEM             │               DBMS                 │
+├────────────────────────────────────┼────────────────────────────────────┤
+│ 1. Data stored in separate files   │ 1. Data stored in structured       │
+│                                    │    database                        │
+├────────────────────────────────────┼────────────────────────────────────┤
+│ 2. High data redundancy            │ 2. Reduced data redundancy         │
+├────────────────────────────────────┼────────────────────────────────────┤
+│ 3. Difficult to maintain and       │ 3. Easy to maintain and update     │
+│    update                          │                                    │
+├────────────────────────────────────┼────────────────────────────────────┤
+│ 4. Security is limited             │ 4. Requires username and password  │
+│                                    │    to access data                  │
+├────────────────────────────────────┼────────────────────────────────────┤
+│ 5. Data sharing is difficult       │ 5. Multiple users can access       │
+│                                    │    data simultaneously             │
+├────────────────────────────────────┼────────────────────────────────────┤
+│ 6. No relationship between files   │ 6. Supports relationships between  │
+│                                    │    data                            │
+├────────────────────────────────────┼────────────────────────────────────┤
+│ 7. Backup and recovery is          │ 7. Provides backup and recovery    │
+│    difficult                       │    features                        │
+├────────────────────────────────────┼────────────────────────────────────┤
+│ 8. Suitable for small              │ 8. Suitable for small, medium,     │
+│    applications                    │    and large applications          │
+└────────────────────────────────────┴────────────────────────────────────┘
+
+What is the difference between a File System and a DBMS?
+
+A file system stores data in separate files and may lead to data redundancy and security issues, A DBMS stores data in structured manner using tables,
+reduces redundancy, provides security, supports multiple users, and ensures data consistency and integrity.
+
+What do you mean the following terminologies data, field, record and database ?
+
+Data : It is nothing but raw, unorganized facts and figures like numbers or names that have not yet been processed
+Example: 23, Gautham Sai, 500000, Python
+
+Field : : The smallest unit of data, representing a single attribute or property (like a column in a spreadsheet, e.g., First Name or Phone Number)
+Example : EmpID, EmpName
+
+Record : A collection of related fields that describes one specific item, person, or entity completely (like a row in a spreadsheet)
+Example : (23, 'Gautham Sai', 500000, 'Python')
+
+Database : A structured system or container (often managed by a Database Management System, or DBMS) that holds tables of records so users can search, sort, and update information securely and efficiently
+Example : A database containing the records of all the shopping transactions 
