@@ -1,0 +1,416 @@
+Altering table names and the column names is a common operation in SQL. 
+The `ALTER TABLE` statement allows you to add, delete, or modify columns in an existing table.
+syntax for table name change:
+```sql  
+alter table old_table_name rename new_table_name;
+```
+syntax for column name change:
+```sql
+alter table table_name change old_column_name new_column_name datatype(size);
+```
+
+DML (Data Manipulation Language) commands are used to manipulate data in the database. 
+The most commonly used DML commands are `INSERT`, `UPDATE`, and `DELETE`.
+
+Insert command is used to add new records to a table. The syntax for the `INSERT` command is as follows:
+```sql
+insert into table_name (column1, column2, column3, ...) values (value1, value2, value3, ...);
+```
+
+inserting multiple records at once:
+```sql
+insert into table_name (column1, column2, column3, ...) values 
+(value1, value2, value3, ...),
+(value1, value2, value3, ...),
+(value1, value2, value3, ...);
+```
+
+update command is used to modify existing records in a table. The syntax for the `UPDATE` command is as follows:
+```sql 
+update table_name set column1 = value1, column2 = value2, ... where condition;
+```
+
+delete command is used to remove existing records from a table. The syntax for the `DELETE` command is as follows:
+```sql
+delete from table_name where condition;
+```
+1. delete age = 17 # delete from students where age = 17;   
+2. delete dept = chemistry # delete from students where dept = 'chemistry';
+3. delete empid = e005 # delete from students where empid = 'e005';
+4. delete lastname = 'arjun'   # delete from students where lastname = 'arjun';
+
+truncate command is used to remove all records from a table, but it does not remove the table itself. 
+The syntax for the `TRUNCATE` command is as follows:
+
+truncate table table_name;
+
+Important interesting points about truncate command:
+1. Truncate is faster than delete because it does not generate individual row delete statements.
+2. Truncate resets any auto-increment counters on the table.
+3. Truncate cannot be rolled back in some databases, so use it with caution.
+4. Truncate does not fire any delete triggers that may be defined on the table.
+5. Truncate is a DDL command, while delete is a DML command.
+6. Truncate is more efficient for large tables because it deallocates the data pages 
+used by the table, while delete removes rows one at a time.
+7. Truncate is not allowed on tables that are referenced by foreign key constraints, 
+while delete can be used with cascading deletes to remove related records in other tables.
+ 
+Important interview questions:
+
+DROP vs TRUNCATE vs DELETE:
+
+1. DROP removes the table structure and all its data, while TRUNCATE removes all data but keeps the table structure intact, 
+and DELETE removes specific rows based on a condition.
+2. DROP is a DDL command, while TRUNCATE and DELETE are DML commands
+3. DROP cannot be rolled back, while TRUNCATE and DELETE can be rolled back in some databases.
+
+
+Command Line Client executed programs :
+
+mysql> CREATE TABLE students (
+    ->     stdid CHAR(7),
+    ->     fname VARCHAR(50),
+    ->     lname VARCHAR(40),
+    ->     age INT,
+    ->     marks INT,
+    ->     percentage INT,
+    ->     student_address VARCHAR(100),
+    ->     dept VARCHAR(50)
+    -> );
+ERROR 1046 (3D000): No database selected
+mysql> CREATE TABLE students (stdid CHAR(10),fname VARCHAR(50),lname VARCHAR(50),age INT, marks INT, percentage INT, student_address VARCHAR(100),department VARCHAR(50));
+ERROR 1046 (3D000): No database selected
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+6 rows in set (0.06 sec)
+
+mysql> CREATE DATABASE Students;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> CREATE TABLE students (stdid CHAR(10),fname VARCHAR(50),lname VARCHAR(50),age INT, marks INT, percentage INT, student_address VARCHAR(100),department VARCHAR(50));
+ERROR 1046 (3D000): No database selected
+mysql> use Students;
+Database changed
+mysql> CREATE TABLE students (stdid CHAR(10),fname VARCHAR(50),lname VARCHAR(50),age INT, marks INT, percentage INT, student_address VARCHAR(100),department VARCHAR(50));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> desc students
+    -> ;
++-----------------+--------------+------+-----+---------+-------+
+| Field           | Type         | Null | Key | Default | Extra |
++-----------------+--------------+------+-----+---------+-------+
+| stdid           | char(10)     | YES  |     | NULL    |       |
+| fname           | varchar(50)  | YES  |     | NULL    |       |
+| lname           | varchar(50)  | YES  |     | NULL    |       |
+| age             | int          | YES  |     | NULL    |       |
+| marks           | int          | YES  |     | NULL    |       |
+| percentage      | int          | YES  |     | NULL    |       |
+| student_address | varchar(100) | YES  |     | NULL    |       |
+| department      | varchar(50)  | YES  |     | NULL    |       |
++-----------------+--------------+------+-----+---------+-------+
+8 rows in set (0.05 sec)
+
+mysql> Alter table students change column lname lastname varchar(100);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> Alter table students change column fname firstname varchar(100);
+Query OK, 0 rows affected (0.10 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc students;
++-----------------+--------------+------+-----+---------+-------+
+| Field           | Type         | Null | Key | Default | Extra |
++-----------------+--------------+------+-----+---------+-------+
+| stdid           | char(10)     | YES  |     | NULL    |       |
+| firstname       | varchar(100) | YES  |     | NULL    |       |
+| lastname        | varchar(100) | YES  |     | NULL    |       |
+| age             | int          | YES  |     | NULL    |       |
+| marks           | int          | YES  |     | NULL    |       |
+| percentage      | int          | YES  |     | NULL    |       |
+| student_address | varchar(100) | YES  |     | NULL    |       |
+| department      | varchar(50)  | YES  |     | NULL    |       |
++-----------------+--------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> -- above two are for changing the column names using the alter command
+mysql> -- now changing the table name
+mysql> -- syntax : alter table table_name old_table_name to new_table_name
+mysql> alter table students rename to Codegnan_Students;
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> show tables;
++--------------------+
+| Tables_in_students |
++--------------------+
+| codegnan_students  |
++--------------------+
+1 row in set (0.04 sec)
+
+mysql> alter table Codegnan_Students rename to Students;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> insert into students (stdid,firstname,lastname,age,marks,percentage,student_address,department)
+    -> values ('GVP202623''Gautham Sai','Karthikeya Reddy',21,89,91,'Akkayapalem','Artificial Intelligence and Machine Learning');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> INSERT INTO students (stdid, fname, lname, age, marks, percentage, student_address, department)
+    -> VALUES ('GVP202623', 'Gautham Sai', 'Karthikeya Reddy', 21, 89, 91, 'Akkayapalem', 'Artificial Intelligence and Machine Learning');
+ERROR 1054 (42S22): Unknown column 'fname' in 'field list'
+mysql> INSERT INTO students (stdid, firstname, lastname, age, marks, percentage, student_address, department)
+    -> VALUES ('GVP202623', 'Gautham Sai', 'Karthikeya Reddy', 21, 89, 91, 'Akkayapalem', 'Artificial Intelligence and Machine Learning');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from Students;
++-----------+-------------+------------------+------+-------+------------+-----------------+----------------------------------------------+
+| stdid     | firstname   | lastname         | age  | marks | percentage | student_address | department                                   |
++-----------+-------------+------------------+------+-------+------------+-----------------+----------------------------------------------+
+| GVP202623 | Gautham Sai | Karthikeya Reddy |   21 |    89 |         91 | Akkayapalem     | Artificial Intelligence and Machine Learning |
++-----------+-------------+------------------+------+-------+------------+-----------------+----------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO students (stdid, firstname, lastname, age, marks, percentage, student_address, department)
+    -> VALUES ('GVP202629', 'Shalini', 'Kolli', 21, 91, 94, 'Gajuwaka', 'Artificial Intelligence'),
+    -> VALUES ('GVP202618', 'Gautham Krishna', 'Ganta', 22, 85, 90, 'Seethamadhara', 'Blockchain'),
+    -> VALUES ('GVP202627', 'Nirup', 'K', 25, 87, 100, 'MVP Sector 1', 'CyberSecurity');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'VALUES ('GVP202618', 'Gautham Krishna', 'Ganta', 22, 85, 90, 'Seethamadhara', 'B' at line 3
+mysql> INSERT INTO students (stdid, firstname, lastname, age, marks, percentage, student_address, department)
+    -> VALUES
+    -> ('GVP202629', 'Shalini', 'Kolli', 21, 91, 94, 'Gajuwaka', 'Artificial Intelligence'),
+    -> ('GVP202618', 'Gautham Krishna', 'Ganta', 22, 85, 90, 'Seethamadhara', 'Blockchain'),
+    -> ('GVP202627', 'Nirup', 'K', 25, 87, 100, 'MVP Sector 1', 'CyberSecurity');
+Query OK, 3 rows affected (0.04 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from Students;
++-----------+-----------------+------------------+------+-------+------------+-----------------+----------------------------------------------+
+| stdid     | firstname       | lastname         | age  | marks | percentage | student_address | department                                   |
++-----------+-----------------+------------------+------+-------+------------+-----------------+----------------------------------------------+
+| GVP202623 | Gautham Sai     | Karthikeya Reddy |   21 |    89 |         91 | Akkayapalem     | Artificial Intelligence and Machine Learning |
+| GVP202629 | Shalini         | Kolli            |   21 |    91 |         94 | Gajuwaka        | Artificial Intelligence                      |
+| GVP202618 | Gautham Krishna | Ganta            |   22 |    85 |         90 | Seethamadhara   | Blockchain                                   |
+| GVP202627 | Nirup           | K                |   25 |    87 |        100 | MVP Sector 1    | CyberSecurity                                |
++-----------+-----------------+------------------+------+-------+------------+-----------------+----------------------------------------------+
+4 rows in set (0.00 sec)
+
+mysql> UPDATE students
+    -> SET stdid = 'GVP202627'
+    -> WHERE firstname = 'Shalini';
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE students
+    -> SET stdid = 'GVP202625'
+    -> WHERE firstname = 'Nirup';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from Students;
++-----------+-----------------+------------------+------+-------+------------+-----------------+----------------------------------------------+
+| stdid     | firstname       | lastname         | age  | marks | percentage | student_address | department                                   |
++-----------+-----------------+------------------+------+-------+------------+-----------------+----------------------------------------------+
+| GVP202623 | Gautham Sai     | Karthikeya Reddy |   21 |    89 |         91 | Akkayapalem     | Artificial Intelligence and Machine Learning |
+| GVP202627 | Shalini         | Kolli            |   21 |    91 |         94 | Gajuwaka        | Artificial Intelligence                      |
+| GVP202618 | Gautham Krishna | Ganta            |   22 |    85 |         90 | Seethamadhara   | Blockchain                                   |
+| GVP202625 | Nirup           | K                |   25 |    87 |        100 | MVP Sector 1    | CyberSecurity                                |
+| GVP202629 | Sandeep         | Koviri           |   20 |    98 |         90 | Gajuwaka        | M.Sc Computer Science                        |
++-----------+-----------------+------------------+------+-------+------------+-----------------+----------------------------------------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM students
+    -> ORDER BY stdid ASC;
++-----------+-----------------+------------------+------+-------+------------+-----------------+----------------------------------------------+
+| stdid     | firstname       | lastname         | age  | marks | percentage | student_address | department                                   |
++-----------+-----------------+------------------+------+-------+------------+-----------------+----------------------------------------------+
+| GVP202618 | Gautham Krishna | Ganta            |   22 |    85 |         90 | Seethamadhara   | Blockchain                                   |
+| GVP202623 | Gautham Sai     | Karthikeya Reddy |   21 |    89 |         91 | Akkayapalem     | Artificial Intelligence and Machine Learning |
+| GVP202625 | Nirup           | K                |   25 |    87 |        100 | MVP Sector 1    | CyberSecurity                                |
+| GVP202627 | Shalini         | Kolli            |   21 |    91 |         94 | Gajuwaka        | Artificial Intelligence                      |
+| GVP202629 | Sandeep         | Koviri           |   20 |    98 |         90 | Gajuwaka        | M.Sc Computer Science                        |
++-----------+-----------------+------------------+------+-------+------------+-----------------+----------------------------------------------+
+5 rows in set (0.00 sec)
+
+mysql> SET stdid = 'GVP202611'
+    -> WHERE firstname = 'Nirup';
+mysql> UPDATE students
+    -> SET stdid = 'GVP202611'
+    -> WHERE firstname = 'Nirup';
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from Students;
++-----------+-----------------+------------------+------+-------+------------+-----------------+----------------------------------------------+
+| stdid     | firstname       | lastname         | age  | marks | percentage | student_address | department                                   |
++-----------+-----------------+------------------+------+-------+------------+-----------------+----------------------------------------------+
+| GVP202623 | Gautham Sai     | Karthikeya Reddy |   21 |    89 |         91 | Akkayapalem     | Artificial Intelligence and Machine Learning |
+| GVP202627 | Shalini         | Kolli            |   21 |    91 |         94 | Gajuwaka        | Artificial Intelligence                      |
+| GVP202618 | Gautham Krishna | Ganta            |   22 |    85 |         90 | Seethamadhara   | Blockchain                                   |
+| GVP202611 | Nirup           | K                |   25 |    87 |        100 | MVP Sector 1    | CyberSecurity                                |
+| GVP202629 | Sandeep         | Koviri           |   20 |    98 |         90 | Gajuwaka        | M.Sc Computer Science                        |
++-----------+-----------------+------------------+------+-------+------------+-----------------+----------------------------------------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM students
+    -> ORDER BY stdid ASC;
++-----------+-----------------+------------------+------+-------+------------+-----------------+----------------------------------------------+
+| stdid     | firstname       | lastname         | age  | marks | percentage | student_address | department                                   |
++-----------+-----------------+------------------+------+-------+------------+-----------------+----------------------------------------------+
+| GVP202611 | Nirup           | K                |   25 |    87 |        100 | MVP Sector 1    | CyberSecurity                                |
+| GVP202618 | Gautham Krishna | Ganta            |   22 |    85 |         90 | Seethamadhara   | Blockchain                                   |
+| GVP202623 | Gautham Sai     | Karthikeya Reddy |   21 |    89 |         91 | Akkayapalem     | Artificial Intelligence and Machine Learning |
+| GVP202627 | Shalini         | Kolli            |   21 |    91 |         94 | Gajuwaka        | Artificial Intelligence                      |
+| GVP202629 | Sandeep         | Koviri           |   20 |    98 |         90 | Gajuwaka        | M.Sc Computer Science                        |
++-----------+-----------------+------------------+------+-------+------------+-----------------+----------------------------------------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into students
+    -> ^C
+mysql>
+mysql> insert into students(stdid,firstname,lastname,age,percentage,department)
+    -> values ('GVP20234','Durga Prasad','Gara',23,76,'M.Sc Computer Science');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM students;
++-----------+-----------------+------------------+------+-------+------------+-----------------+----------------------------------------------+
+| stdid     | firstname       | lastname         | age  | marks | percentage | student_address | department                                   |
++-----------+-----------------+------------------+------+-------+------------+-----------------+----------------------------------------------+
+| GVP202623 | Gautham Sai     | Karthikeya Reddy |   21 |    89 |         91 | Akkayapalem     | Artificial Intelligence and Machine Learning |
+| GVP202627 | Shalini         | Kolli            |   21 |    91 |         94 | Gajuwaka        | Artificial Intelligence                      |
+| GVP202618 | Gautham Krishna | Ganta            |   22 |    85 |         90 | Seethamadhara   | Blockchain                                   |
+| GVP202611 | Nirup           | K                |   25 |    87 |        100 | MVP Sector 1    | CyberSecurity                                |
+| GVP202629 | Sandeep         | Koviri           |   20 |    98 |         90 | Gajuwaka        | M.Sc Computer Science                        |
+| GVP20234  | Durga Prasad    | Gara             |   23 |  NULL |         76 | NULL            | M.Sc Computer Science                        |
++-----------+-----------------+------------------+------+-------+------------+-----------------+----------------------------------------------+
+6 rows in set (0.00 sec)
+
+mysql> update student
+    -> set student-address = "Madhurawada"
+    -> where firstname = 'Durga Prasad';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-address = "Madhurawada"
+where firstname = 'Durga Prasad'' at line 2
+mysql> update student
+    -> set student_address = 'Madhurawada'
+    -> where firstname = 'Durga Prasad';
+ERROR 1146 (42S02): Table 'students.student' doesn't exist
+mysql> update students
+    -> set student_address = 'Madhurawada'
+    -> where firstname = 'Durga Prasad';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update student
+    -> ^C
+mysql> update students
+    -> where stdid = 'GVP202634'
+    -> where firstname = 'Durga Prasad';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where stdid = 'GVP202634'
+where firstname = 'Durga Prasad'' at line 2
+mysql> update students
+    -> set stdid = 'GVP202634'
+    -> where firstname = 'Durga Prasad';
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM students;
++-----------+-----------------+------------------+------+-------+------------+-----------------+----------------------------------------------+
+| stdid     | firstname       | lastname         | age  | marks | percentage | student_address | department                                   |
++-----------+-----------------+------------------+------+-------+------------+-----------------+----------------------------------------------+
+| GVP202623 | Gautham Sai     | Karthikeya Reddy |   21 |    89 |         91 | Akkayapalem     | Artificial Intelligence and Machine Learning |
+| GVP202627 | Shalini         | Kolli            |   21 |    91 |         94 | Gajuwaka        | Artificial Intelligence                      |
+| GVP202618 | Gautham Krishna | Ganta            |   22 |    85 |         90 | Seethamadhara   | Blockchain                                   |
+| GVP202611 | Nirup           | K                |   25 |    87 |        100 | MVP Sector 1    | CyberSecurity                                |
+| GVP202629 | Sandeep         | Koviri           |   20 |    98 |         90 | Gajuwaka        | M.Sc Computer Science                        |
+| GVP202634 | Durga Prasad    | Gara             |   23 |  NULL |         76 | Madhurawada     | M.Sc Computer Science                        |
++-----------+-----------------+------------------+------+-------+------------+-----------------+----------------------------------------------+
+6 rows in set (0.00 sec)
+
+mysql> update students
+    -> set marks = 81
+    -> where firstname = 'Durga Prasad';
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM students;
++-----------+-----------------+------------------+------+-------+------------+-----------------+----------------------------------------------+
+| stdid     | firstname       | lastname         | age  | marks | percentage | student_address | department                                   |
++-----------+-----------------+------------------+------+-------+------------+-----------------+----------------------------------------------+
+| GVP202623 | Gautham Sai     | Karthikeya Reddy |   21 |    89 |         91 | Akkayapalem     | Artificial Intelligence and Machine Learning |
+| GVP202627 | Shalini         | Kolli            |   21 |    91 |         94 | Gajuwaka        | Artificial Intelligence                      |
+| GVP202618 | Gautham Krishna | Ganta            |   22 |    85 |         90 | Seethamadhara   | Blockchain                                   |
+| GVP202611 | Nirup           | K                |   25 |    87 |        100 | MVP Sector 1    | CyberSecurity                                |
+| GVP202629 | Sandeep         | Koviri           |   20 |    98 |         90 | Gajuwaka        | M.Sc Computer Science                        |
+| GVP202634 | Durga Prasad    | Gara             |   23 |    81 |         76 | Madhurawada     | M.Sc Computer Science                        |
++-----------+-----------------+------------------+------+-------+------------+-----------------+----------------------------------------------+
+6 rows in set (0.00 sec)
+
+mysql> update students
+    -> set age = 18
+    -> where stdid = 'GVP202627';
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM students;
++-----------+-----------------+------------------+------+-------+------------+-----------------+----------------------------------------------+
+| stdid     | firstname       | lastname         | age  | marks | percentage | student_address | department                                   |
++-----------+-----------------+------------------+------+-------+------------+-----------------+----------------------------------------------+
+| GVP202623 | Gautham Sai     | Karthikeya Reddy |   21 |    89 |         91 | Akkayapalem     | Artificial Intelligence and Machine Learning |
+| GVP202627 | Shalini         | Kolli            |   18 |    91 |         94 | Gajuwaka        | Artificial Intelligence                      |
+| GVP202618 | Gautham Krishna | Ganta            |   22 |    85 |         90 | Seethamadhara   | Blockchain                                   |
+| GVP202611 | Nirup           | K                |   25 |    87 |        100 | MVP Sector 1    | CyberSecurity                                |
+| GVP202629 | Sandeep         | Koviri           |   20 |    98 |         90 | Gajuwaka        | M.Sc Computer Science                        |
+| GVP202634 | Durga Prasad    | Gara             |   23 |    81 |         76 | Madhurawada     | M.Sc Computer Science                        |
++-----------+-----------------+------------------+------+-------+------------+-----------------+----------------------------------------------+
+6 rows in set (0.00 sec)
+
+mysql> update students
+    -> set age = 23
+    -> where lastname = 'Koviri';
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> INSERT INTO students (stdid, firstname, lastname, age, marks, percentage, student_address, department)
+    -> VALUES ('GVP202630', 'Sandeep', 'Krsihan Garra', 20, 98, 90, 'Anakapalle', 'MCA');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM students;
++-----------+-----------------+------------------+------+-------+------------+-----------------+----------------------------------------------+
+| stdid     | firstname       | lastname         | age  | marks | percentage | student_address | department                                   |
++-----------+-----------------+------------------+------+-------+------------+-----------------+----------------------------------------------+
+| GVP202623 | Gautham Sai     | Karthikeya Reddy |   21 |    89 |         91 | Akkayapalem     | Artificial Intelligence and Machine Learning |
+| GVP202627 | Shalini         | Kolli            |   18 |    91 |         94 | Gajuwaka        | Artificial Intelligence                      |
+| GVP202618 | Gautham Krishna | Ganta            |   22 |    85 |         90 | Seethamadhara   | Blockchain                                   |
+| GVP202611 | Nirup           | K                |   25 |    87 |        100 | MVP Sector 1    | CyberSecurity                                |
+| GVP202629 | Sandeep         | Koviri           |   23 |    98 |         90 | Gajuwaka        | M.Sc Computer Science                        |
+| GVP202634 | Durga Prasad    | Gara             |   23 |    81 |         76 | Madhurawada     | M.Sc Computer Science                        |
+| GVP202630 | Sandeep         | Krsihan Garra    |   20 |    98 |         90 | Anakapalle      | MCA                                          |
++-----------+-----------------+------------------+------+-------+------------+-----------------+----------------------------------------------+
+7 rows in set (0.00 sec)
+
+mysql> delete from students where stdid = 'GVP202630';
+Query OK, 1 row affected (0.04 sec)
+
+mysql> create user 'gauthamsai' identified by 'gauthamsai2365';
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> create user 'shalini' identified by 'shalini2702';
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> create table emp(empid int,empname varchar(50),salary int,branch varachar(30));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'varachar(30))' at line 1
+mysql> create table emp(empid int,empname varchar(50),salary int,branch varchar(30));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> grant select,update,delete on emp to 'shalini';
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> grant insert,drop on emp to 'gauthamsai';
+Query OK, 0 rows affected (0.04 sec)
+
