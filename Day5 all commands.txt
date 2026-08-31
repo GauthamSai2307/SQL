@@ -1,0 +1,595 @@
+Enter password: ************
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 11
+Server version: 8.0.46 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2026, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| students           |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.06 sec)
+
+mysql> show tables;
+ERROR 1046 (3D000): No database selected
+mysql> use students;
+Database changed
+mysql> show tables;
++--------------------+
+| Tables_in_students |
++--------------------+
+| emp                |
+| students           |
++--------------------+
+2 rows in set (0.00 sec)
+
+mysql> revoke select on emp from shalini;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> create table employees(
+    -> empid int auto_increment primary key,
+    -> name varchar(50),
+    -> dept varchat(10)
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'varchat(10)
+)' at line 4
+mysql> create table employees(
+    -> empid int auto_increment primary key,
+    -> name varchar(50),
+    -> dept varchar(10)
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> insert into employees(name, dept)
+    -> values('gautham','AI & ML'),
+    -> values('shalini','AI');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'values('shalini','AI')' at line 3
+mysql> insert into employees(name, dept)
+    -> values('gautham','AI & ML');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into employees(name, dept)
+    -> values('shalini','AI');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from employees;
++-------+---------+---------+
+| empid | name    | dept    |
++-------+---------+---------+
+|     1 | gautham | AI & ML |
+|     2 | shalini | AI      |
++-------+---------+---------+
+2 rows in set (0.00 sec)
+
+mysql> delete from employees where empid = 1;
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into employees(name, dept)
+    -> values('gautham','AI & ML');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from employees;
++-------+---------+---------+
+| empid | name    | dept    |
++-------+---------+---------+
+|     2 | shalini | AI      |
+|     3 | gautham | AI & ML |
++-------+---------+---------+
+2 rows in set (0.00 sec)
+
+mysql> insert into employees(name, dept)
+    -> values('nirup','Cybersecurity')
+    -> ,('sandeep','M.Sc Computer Science');
+ERROR 1406 (22001): Data too long for column 'dept' at row 1
+mysql> insert into employees(name, dept)
+    -> values('nirup','Cybersecurity'),
+    -> ('sandeep','M.Sc Computer Science');
+ERROR 1406 (22001): Data too long for column 'dept' at row 1
+mysql> insert into employees(name,dept)
+    -> values('nirup','Cybersecurity'),
+    -> ('sandeep','M.Sc Computer Science');
+ERROR 1406 (22001): Data too long for column 'dept' at row 1
+mysql> desc employees;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| empid | int         | NO   | PRI | NULL    | auto_increment |
+| name  | varchar(50) | YES  |     | NULL    |                |
+| dept  | varchar(10) | YES  |     | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> ALTER TABLE employees MODIFY COLUMN dept VARCHAR(50);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO employees(name, dept)
+    -> VALUES
+    ->     ('nirup', 'Cybersecurity'),
+    ->     ('sandeep', 'M.Sc Computer Science');
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from employees;
++-------+---------+-----------------------+
+| empid | name    | dept                  |
++-------+---------+-----------------------+
+|     2 | shalini | AI                    |
+|     3 | gautham | AI & ML               |
+|     4 | nirup   | Cybersecurity         |
+|     5 | sandeep | M.Sc Computer Science |
++-------+---------+-----------------------+
+4 rows in set (0.00 sec)
+
+mysql> create table backup_employees as select * from employees;
+Query OK, 4 rows affected (0.07 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> show tables;
++--------------------+
+| Tables_in_students |
++--------------------+
+| backup_employees   |
+| emp                |
+| employees          |
+| students           |
++--------------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from backup_employees;
++-------+---------+-----------------------+
+| empid | name    | dept                  |
++-------+---------+-----------------------+
+|     2 | shalini | AI                    |
+|     3 | gautham | AI & ML               |
+|     4 | nirup   | Cybersecurity         |
+|     5 | sandeep | M.Sc Computer Science |
++-------+---------+-----------------------+
+4 rows in set (0.00 sec)
+
+mysql> create table backupof_employees as select * from employees where 1=0;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from backupof_employees;
+Empty set (0.00 sec)
+
+mysql> create table backupof_employees1 as select * from employees where 1=2;
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from backupof_employees1;
+Empty set (0.00 sec)
+
+mysql> drop table backupof_employees1;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> drop table backupof_employees;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> drop table backup_employees;
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> create table backupof_employees as select * from employees where limit= 2;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'limit= 2' at line 1
+mysql> create table backupof_employees as select * from employees where limit = 2;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'limit = 2' at line 1
+mysql> CREATE TABLE backupof_employees AS
+    -> SELECT * FROM employees
+    -> LIMIT 2;
+Query OK, 2 rows affected (0.06 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> create table products(
+    -> prodid int auto_increment primary key,
+    -> prodname varchar(50),
+    -> price decimal(10,2),
+    -> quantity int,
+    -> total decimal(10,2) generated always as (price * quantity) stored
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into products(proid,proname,price,quantity)
+    -> values^C
+mysql> insert into products(proname,price,quantity)
+    -> values('earphones',150,5),
+    -> ('RAM',10550,2),
+    -> ('VRAM',305000,3);
+ERROR 1054 (42S22): Unknown column 'proname' in 'field list'
+mysql> insert into products(prodname,price,quantity)
+    -> values('earphones',150,5),
+    -> ('RAM',10550,2),
+    -> ('VRAM',305000,3);
+Query OK, 3 rows affected (0.04 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from products;
++--------+-----------+-----------+----------+-----------+
+| prodid | prodname  | price     | quantity | total     |
++--------+-----------+-----------+----------+-----------+
+|      1 | earphones |    150.00 |        5 |    750.00 |
+|      2 | RAM       |  10550.00 |        2 |  21100.00 |
+|      3 | VRAM      | 305000.00 |        3 | 915000.00 |
++--------+-----------+-----------+----------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> update products
+    -> set price = 15000
+    -> where prodid = 2;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from products;
++--------+-----------+-----------+----------+-----------+
+| prodid | prodname  | price     | quantity | total     |
++--------+-----------+-----------+----------+-----------+
+|      1 | earphones |    150.00 |        5 |    750.00 |
+|      2 | RAM       |  15000.00 |        2 |  30000.00 |
+|      3 | VRAM      | 305000.00 |        3 | 915000.00 |
++--------+-----------+-----------+----------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> drop table employees;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE TABLE EMPLOYEES (
+    ->     EMP_ID CHAR(5),
+    ->     FNAME VARCHAR(50),
+    ->     LNAME VARCHAR(50),
+    ->     AGE INT,
+    ->     DOJ DATE,
+    ->     ADDRESS TINYTEXT,
+    ->     DEPT VARCHAR(20)
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> drop table employees;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE TABLE employees (
+    ->     emp_id VARCHAR(10),
+    ->     firstname VARCHAR(30),
+    ->     last_name VARCHAR(30),
+    ->     age INT,
+    ->     doj DATE,
+    ->     address VARCHAR(30),
+    ->     dept VARCHAR(30)
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> drop table employees;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE TABLE employees (
+    ->     emp_id INT PRIMARY KEY,
+    ->     emp_name VARCHAR(100),
+    ->     department VARCHAR(50),
+    ->     job_role VARCHAR(50),
+    ->     salary DECIMAL(10,2),
+    ->     joining_date DATE,
+    ->     city VARCHAR(50)
+    -> );
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> INSERT INTO employees
+    -> (emp_id, emp_name, department, job_role, salary, joining_date, city)
+    -> VALUES
+    -> (101, 'Ravi Kumar', 'IT', 'Developer', 45000, '2023-01-15', 'Vizag'),
+    -> (102, 'Priya Sharma', 'HR', 'HR Manager', 55000, '2022-06-20', 'Hyderabad'),
+    -> (103, 'Kiran Reddy', 'IT', 'Tester', 40000, '2023-03-10', 'Vizag'),
+    -> (104, 'Sneha Rao', 'Finance', 'Accountant', 48000, '2021-11-25', 'Chennai'),
+    -> (105, 'Arun Kumar', 'IT', 'Developer', 60000, '2020-08-18', 'Bangalore'),
+    -> (106, 'Divya Reddy', 'HR', 'Recruiter', 35000, '2024-01-05', 'Vizag'),
+    -> (107, 'Suresh Babu', 'Sales', 'Executive', 42000, '2022-09-12', 'Hyderabad'),
+    -> (108, 'Anjali Devi', 'IT', 'Developer', 70000, '2019-05-30', 'Chennai'),
+    -> (109, 'Mahesh Kumar', 'Sales', 'Manager', 65000, '2020-02-14', 'Bangalore'),
+    -> (110, 'Lakshmi Rao', 'Finance', 'Analyst', 52000, '2023-07-22', 'Hyderabad');
+Query OK, 10 rows affected (0.04 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> select * from employees;
++--------+--------------+------------+------------+----------+--------------+-----------+
+| emp_id | emp_name     | department | job_role   | salary   | joining_date | city      |
++--------+--------------+------------+------------+----------+--------------+-----------+
+|    101 | Ravi Kumar   | IT         | Developer  | 45000.00 | 2023-01-15   | Vizag     |
+|    102 | Priya Sharma | HR         | HR Manager | 55000.00 | 2022-06-20   | Hyderabad |
+|    103 | Kiran Reddy  | IT         | Tester     | 40000.00 | 2023-03-10   | Vizag     |
+|    104 | Sneha Rao    | Finance    | Accountant | 48000.00 | 2021-11-25   | Chennai   |
+|    105 | Arun Kumar   | IT         | Developer  | 60000.00 | 2020-08-18   | Bangalore |
+|    106 | Divya Reddy  | HR         | Recruiter  | 35000.00 | 2024-01-05   | Vizag     |
+|    107 | Suresh Babu  | Sales      | Executive  | 42000.00 | 2022-09-12   | Hyderabad |
+|    108 | Anjali Devi  | IT         | Developer  | 70000.00 | 2019-05-30   | Chennai   |
+|    109 | Mahesh Kumar | Sales      | Manager    | 65000.00 | 2020-02-14   | Bangalore |
+|    110 | Lakshmi Rao  | Finance    | Analyst    | 52000.00 | 2023-07-22   | Hyderabad |
++--------+--------------+------------+------------+----------+--------------+-----------+
+10 rows in set (0.00 sec)
+
+mysql>
+mysql> alter table employees add email varchar(100);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table employees add phone varchar(15);
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table employees modify column department varchar(100);
+Query OK, 10 rows affected (0.08 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> alter table employees modify column salary decimal(12,2);
+Query OK, 10 rows affected (0.04 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> alter table employees rename column city to location;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from employees;
++--------+--------------+------------+------------+----------+--------------+-----------+-------+-------+
+| emp_id | emp_name     | department | job_role   | salary   | joining_date | location  | email | phone |
++--------+--------------+------------+------------+----------+--------------+-----------+-------+-------+
+|    101 | Ravi Kumar   | IT         | Developer  | 45000.00 | 2023-01-15   | Vizag     | NULL  | NULL  |
+|    102 | Priya Sharma | HR         | HR Manager | 55000.00 | 2022-06-20   | Hyderabad | NULL  | NULL  |
+|    103 | Kiran Reddy  | IT         | Tester     | 40000.00 | 2023-03-10   | Vizag     | NULL  | NULL  |
+|    104 | Sneha Rao    | Finance    | Accountant | 48000.00 | 2021-11-25   | Chennai   | NULL  | NULL  |
+|    105 | Arun Kumar   | IT         | Developer  | 60000.00 | 2020-08-18   | Bangalore | NULL  | NULL  |
+|    106 | Divya Reddy  | HR         | Recruiter  | 35000.00 | 2024-01-05   | Vizag     | NULL  | NULL  |
+|    107 | Suresh Babu  | Sales      | Executive  | 42000.00 | 2022-09-12   | Hyderabad | NULL  | NULL  |
+|    108 | Anjali Devi  | IT         | Developer  | 70000.00 | 2019-05-30   | Chennai   | NULL  | NULL  |
+|    109 | Mahesh Kumar | Sales      | Manager    | 65000.00 | 2020-02-14   | Bangalore | NULL  | NULL  |
+|    110 | Lakshmi Rao  | Finance    | Analyst    | 52000.00 | 2023-07-22   | Hyderabad | NULL  | NULL  |
++--------+--------------+------------+------------+----------+--------------+-----------+-------+-------+
+10 rows in set (0.00 sec)
+
+mysql> alter table employees drop column phone;
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from employees;
++--------+--------------+------------+------------+----------+--------------+-----------+-------+
+| emp_id | emp_name     | department | job_role   | salary   | joining_date | location  | email |
++--------+--------------+------------+------------+----------+--------------+-----------+-------+
+|    101 | Ravi Kumar   | IT         | Developer  | 45000.00 | 2023-01-15   | Vizag     | NULL  |
+|    102 | Priya Sharma | HR         | HR Manager | 55000.00 | 2022-06-20   | Hyderabad | NULL  |
+|    103 | Kiran Reddy  | IT         | Tester     | 40000.00 | 2023-03-10   | Vizag     | NULL  |
+|    104 | Sneha Rao    | Finance    | Accountant | 48000.00 | 2021-11-25   | Chennai   | NULL  |
+|    105 | Arun Kumar   | IT         | Developer  | 60000.00 | 2020-08-18   | Bangalore | NULL  |
+|    106 | Divya Reddy  | HR         | Recruiter  | 35000.00 | 2024-01-05   | Vizag     | NULL  |
+|    107 | Suresh Babu  | Sales      | Executive  | 42000.00 | 2022-09-12   | Hyderabad | NULL  |
+|    108 | Anjali Devi  | IT         | Developer  | 70000.00 | 2019-05-30   | Chennai   | NULL  |
+|    109 | Mahesh Kumar | Sales      | Manager    | 65000.00 | 2020-02-14   | Bangalore | NULL  |
+|    110 | Lakshmi Rao  | Finance    | Analyst    | 52000.00 | 2023-07-22   | Hyderabad | NULL  |
++--------+--------------+------------+------------+----------+--------------+-----------+-------+
+10 rows in set (0.00 sec)
+
+mysql> alter table employees add experience int;
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from employees;
++--------+--------------+------------+------------+----------+--------------+-----------+-------+------------+
+| emp_id | emp_name     | department | job_role   | salary   | joining_date | location  | email | experience |
++--------+--------------+------------+------------+----------+--------------+-----------+-------+------------+
+|    101 | Ravi Kumar   | IT         | Developer  | 45000.00 | 2023-01-15   | Vizag     | NULL  |       NULL |
+|    102 | Priya Sharma | HR         | HR Manager | 55000.00 | 2022-06-20   | Hyderabad | NULL  |       NULL |
+|    103 | Kiran Reddy  | IT         | Tester     | 40000.00 | 2023-03-10   | Vizag     | NULL  |       NULL |
+|    104 | Sneha Rao    | Finance    | Accountant | 48000.00 | 2021-11-25   | Chennai   | NULL  |       NULL |
+|    105 | Arun Kumar   | IT         | Developer  | 60000.00 | 2020-08-18   | Bangalore | NULL  |       NULL |
+|    106 | Divya Reddy  | HR         | Recruiter  | 35000.00 | 2024-01-05   | Vizag     | NULL  |       NULL |
+|    107 | Suresh Babu  | Sales      | Executive  | 42000.00 | 2022-09-12   | Hyderabad | NULL  |       NULL |
+|    108 | Anjali Devi  | IT         | Developer  | 70000.00 | 2019-05-30   | Chennai   | NULL  |       NULL |
+|    109 | Mahesh Kumar | Sales      | Manager    | 65000.00 | 2020-02-14   | Bangalore | NULL  |       NULL |
+|    110 | Lakshmi Rao  | Finance    | Analyst    | 52000.00 | 2023-07-22   | Hyderabad | NULL  |       NULL |
++--------+--------------+------------+------------+----------+--------------+-----------+-------+------------+
+10 rows in set (0.00 sec)
+
+mysql> insert into employees(111,'Rahul Singh','IT','Developer',50000,'2024-05-15','Vizag');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '111,'Rahul Singh','IT','Developer',50000,'2024-05-15','Vizag')' at line 1
+mysql> insert into employees()(111,'Rahul Singh','IT','Developer',50000,'2024-05-15','Vizag');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '111,'Rahul Singh','IT','Developer',50000,'2024-05-15','Vizag')' at line 1
+mysql> insert into employees(emp_id,emp_name,department,job_role,salary,joining_date,location)
+    -> values(111,'Rahul Singh','IT','Developer',50000,'2024-05-15','Vizag');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into employees(emp_id,emp_name,department,job_role,salary,joining_date,location)
+    -> values(112,'Shruthi','IT','Tester',70000,'2024-07-23','Chennai'),
+    -> (113,'Gautham Sai','IT','AI & ML Engineer',90000,'2024-02-27','Banglore'),
+    -> (114,'Nirup','IT','CyberSecurity',75000,'2025-10-30','Hyderabad');
+Query OK, 3 rows affected (0.04 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from employees;
++--------+--------------+------------+------------------+----------+--------------+-----------+-------+------------+
+| emp_id | emp_name     | department | job_role         | salary   | joining_date | location  | email | experience |
++--------+--------------+------------+------------------+----------+--------------+-----------+-------+------------+
+|    101 | Ravi Kumar   | IT         | Developer        | 45000.00 | 2023-01-15   | Vizag     | NULL  |       NULL |
+|    102 | Priya Sharma | HR         | HR Manager       | 55000.00 | 2022-06-20   | Hyderabad | NULL  |       NULL |
+|    103 | Kiran Reddy  | IT         | Tester           | 40000.00 | 2023-03-10   | Vizag     | NULL  |       NULL |
+|    104 | Sneha Rao    | Finance    | Accountant       | 48000.00 | 2021-11-25   | Chennai   | NULL  |       NULL |
+|    105 | Arun Kumar   | IT         | Developer        | 60000.00 | 2020-08-18   | Bangalore | NULL  |       NULL |
+|    106 | Divya Reddy  | HR         | Recruiter        | 35000.00 | 2024-01-05   | Vizag     | NULL  |       NULL |
+|    107 | Suresh Babu  | Sales      | Executive        | 42000.00 | 2022-09-12   | Hyderabad | NULL  |       NULL |
+|    108 | Anjali Devi  | IT         | Developer        | 70000.00 | 2019-05-30   | Chennai   | NULL  |       NULL |
+|    109 | Mahesh Kumar | Sales      | Manager          | 65000.00 | 2020-02-14   | Bangalore | NULL  |       NULL |
+|    110 | Lakshmi Rao  | Finance    | Analyst          | 52000.00 | 2023-07-22   | Hyderabad | NULL  |       NULL |
+|    111 | Rahul Singh  | IT         | Developer        | 50000.00 | 2024-05-15   | Vizag     | NULL  |       NULL |
+|    112 | Shruthi      | IT         | Tester           | 70000.00 | 2024-07-23   | Chennai   | NULL  |       NULL |
+|    113 | Gautham Sai  | IT         | AI & ML Engineer | 90000.00 | 2024-02-27   | Banglore  | NULL  |       NULL |
+|    114 | Nirup        | IT         | CyberSecurity    | 75000.00 | 2025-10-30   | Hyderabad | NULL  |       NULL |
++--------+--------------+------------+------------------+----------+--------------+-----------+-------+------------+
+14 rows in set (0.00 sec)
+
+mysql> update employees
+    -> set salary = 50000
+    -> where emp_name = 'Ravi Kumar';
+Query OK, 1 row affected (0.06 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update employees
+    ->
+    -> set salary = salary * 1.10
+    -> where dept = 'IT';
+ERROR 1054 (42S22): Unknown column 'dept' in 'where clause'
+mysql> update employees
+    -> set salary = salary * 1.10
+    -> where deparment = 'IT';
+ERROR 1054 (42S22): Unknown column 'deparment' in 'where clause'
+mysql> update employees
+    -> set salary = salary * 1.10
+    -> where department = 'IT';
+Query OK, 8 rows affected (0.06 sec)
+Rows matched: 8  Changed: 8  Warnings: 0
+
+mysql> select * from employees;
++--------+--------------+------------+------------------+----------+--------------+-----------+-------+------------+
+| emp_id | emp_name     | department | job_role         | salary   | joining_date | location  | email | experience |
++--------+--------------+------------+------------------+----------+--------------+-----------+-------+------------+
+|    101 | Ravi Kumar   | IT         | Developer        | 55000.00 | 2023-01-15   | Vizag     | NULL  |       NULL |
+|    102 | Priya Sharma | HR         | HR Manager       | 55000.00 | 2022-06-20   | Hyderabad | NULL  |       NULL |
+|    103 | Kiran Reddy  | IT         | Tester           | 44000.00 | 2023-03-10   | Vizag     | NULL  |       NULL |
+|    104 | Sneha Rao    | Finance    | Accountant       | 48000.00 | 2021-11-25   | Chennai   | NULL  |       NULL |
+|    105 | Arun Kumar   | IT         | Developer        | 66000.00 | 2020-08-18   | Bangalore | NULL  |       NULL |
+|    106 | Divya Reddy  | HR         | Recruiter        | 35000.00 | 2024-01-05   | Vizag     | NULL  |       NULL |
+|    107 | Suresh Babu  | Sales      | Executive        | 42000.00 | 2022-09-12   | Hyderabad | NULL  |       NULL |
+|    108 | Anjali Devi  | IT         | Developer        | 77000.00 | 2019-05-30   | Chennai   | NULL  |       NULL |
+|    109 | Mahesh Kumar | Sales      | Manager          | 65000.00 | 2020-02-14   | Bangalore | NULL  |       NULL |
+|    110 | Lakshmi Rao  | Finance    | Analyst          | 52000.00 | 2023-07-22   | Hyderabad | NULL  |       NULL |
+|    111 | Rahul Singh  | IT         | Developer        | 55000.00 | 2024-05-15   | Vizag     | NULL  |       NULL |
+|    112 | Shruthi      | IT         | Tester           | 77000.00 | 2024-07-23   | Chennai   | NULL  |       NULL |
+|    113 | Gautham Sai  | IT         | AI & ML Engineer | 99000.00 | 2024-02-27   | Banglore  | NULL  |       NULL |
+|    114 | Nirup        | IT         | CyberSecurity    | 82500.00 | 2025-10-30   | Hyderabad | NULL  |       NULL |
++--------+--------------+------------+------------------+----------+--------------+-----------+-------+------------+
+14 rows in set (0.00 sec)
+
+mysql> update employees
+    -> set salary = salary + 5000
+    -> where department = 'HR';
+Query OK, 2 rows affected (0.05 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select * from employees;
++--------+--------------+------------+------------------+----------+--------------+-----------+-------+------------+
+| emp_id | emp_name     | department | job_role         | salary   | joining_date | location  | email | experience |
++--------+--------------+------------+------------------+----------+--------------+-----------+-------+------------+
+|    101 | Ravi Kumar   | IT         | Developer        | 55000.00 | 2023-01-15   | Vizag     | NULL  |       NULL |
+|    102 | Priya Sharma | HR         | HR Manager       | 60000.00 | 2022-06-20   | Hyderabad | NULL  |       NULL |
+|    103 | Kiran Reddy  | IT         | Tester           | 44000.00 | 2023-03-10   | Vizag     | NULL  |       NULL |
+|    104 | Sneha Rao    | Finance    | Accountant       | 48000.00 | 2021-11-25   | Chennai   | NULL  |       NULL |
+|    105 | Arun Kumar   | IT         | Developer        | 66000.00 | 2020-08-18   | Bangalore | NULL  |       NULL |
+|    106 | Divya Reddy  | HR         | Recruiter        | 40000.00 | 2024-01-05   | Vizag     | NULL  |       NULL |
+|    107 | Suresh Babu  | Sales      | Executive        | 42000.00 | 2022-09-12   | Hyderabad | NULL  |       NULL |
+|    108 | Anjali Devi  | IT         | Developer        | 77000.00 | 2019-05-30   | Chennai   | NULL  |       NULL |
+|    109 | Mahesh Kumar | Sales      | Manager          | 65000.00 | 2020-02-14   | Bangalore | NULL  |       NULL |
+|    110 | Lakshmi Rao  | Finance    | Analyst          | 52000.00 | 2023-07-22   | Hyderabad | NULL  |       NULL |
+|    111 | Rahul Singh  | IT         | Developer        | 55000.00 | 2024-05-15   | Vizag     | NULL  |       NULL |
+|    112 | Shruthi      | IT         | Tester           | 77000.00 | 2024-07-23   | Chennai   | NULL  |       NULL |
+|    113 | Gautham Sai  | IT         | AI & ML Engineer | 99000.00 | 2024-02-27   | Banglore  | NULL  |       NULL |
+|    114 | Nirup        | IT         | CyberSecurity    | 82500.00 | 2025-10-30   | Hyderabad | NULL  |       NULL |
++--------+--------------+------------+------------------+----------+--------------+-----------+-------+------------+
+14 rows in set (0.00 sec)
+
+mysql> update employees
+    -> set job_role = 'Senior Tester'
+    -> where emp_id = 103;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from employees;
++--------+--------------+------------+------------------+----------+--------------+-----------+-------+------------+
+| emp_id | emp_name     | department | job_role         | salary   | joining_date | location  | email | experience |
++--------+--------------+------------+------------------+----------+--------------+-----------+-------+------------+
+|    101 | Ravi Kumar   | IT         | Developer        | 55000.00 | 2023-01-15   | Vizag     | NULL  |       NULL |
+|    102 | Priya Sharma | HR         | HR Manager       | 60000.00 | 2022-06-20   | Hyderabad | NULL  |       NULL |
+|    103 | Kiran Reddy  | IT         | Senior Tester    | 44000.00 | 2023-03-10   | Vizag     | NULL  |       NULL |
+|    104 | Sneha Rao    | Finance    | Accountant       | 48000.00 | 2021-11-25   | Chennai   | NULL  |       NULL |
+|    105 | Arun Kumar   | IT         | Developer        | 66000.00 | 2020-08-18   | Bangalore | NULL  |       NULL |
+|    106 | Divya Reddy  | HR         | Recruiter        | 40000.00 | 2024-01-05   | Vizag     | NULL  |       NULL |
+|    107 | Suresh Babu  | Sales      | Executive        | 42000.00 | 2022-09-12   | Hyderabad | NULL  |       NULL |
+|    108 | Anjali Devi  | IT         | Developer        | 77000.00 | 2019-05-30   | Chennai   | NULL  |       NULL |
+|    109 | Mahesh Kumar | Sales      | Manager          | 65000.00 | 2020-02-14   | Bangalore | NULL  |       NULL |
+|    110 | Lakshmi Rao  | Finance    | Analyst          | 52000.00 | 2023-07-22   | Hyderabad | NULL  |       NULL |
+|    111 | Rahul Singh  | IT         | Developer        | 55000.00 | 2024-05-15   | Vizag     | NULL  |       NULL |
+|    112 | Shruthi      | IT         | Tester           | 77000.00 | 2024-07-23   | Chennai   | NULL  |       NULL |
+|    113 | Gautham Sai  | IT         | AI & ML Engineer | 99000.00 | 2024-02-27   | Banglore  | NULL  |       NULL |
+|    114 | Nirup        | IT         | CyberSecurity    | 82500.00 | 2025-10-30   | Hyderabad | NULL  |       NULL |
++--------+--------------+------------+------------------+----------+--------------+-----------+-------+------------+
+14 rows in set (0.00 sec)
+
+mysql> update employees
+    -> set city = 'Hyderabad'
+    -> where city = 'Vizag';
+ERROR 1054 (42S22): Unknown column 'city' in 'where clause'
+mysql> update employees
+    -> set location = 'Hyderabad'
+    -> where location = 'Vizag';
+Query OK, 4 rows affected (0.00 sec)
+Rows matched: 4  Changed: 4  Warnings: 0
+
+mysql> select * from employees;
++--------+--------------+------------+------------------+----------+--------------+-----------+-------+------------+
+| emp_id | emp_name     | department | job_role         | salary   | joining_date | location  | email | experience |
++--------+--------------+------------+------------------+----------+--------------+-----------+-------+------------+
+|    101 | Ravi Kumar   | IT         | Developer        | 55000.00 | 2023-01-15   | Hyderabad | NULL  |       NULL |
+|    102 | Priya Sharma | HR         | HR Manager       | 60000.00 | 2022-06-20   | Hyderabad | NULL  |       NULL |
+|    103 | Kiran Reddy  | IT         | Senior Tester    | 44000.00 | 2023-03-10   | Hyderabad | NULL  |       NULL |
+|    104 | Sneha Rao    | Finance    | Accountant       | 48000.00 | 2021-11-25   | Chennai   | NULL  |       NULL |
+|    105 | Arun Kumar   | IT         | Developer        | 66000.00 | 2020-08-18   | Bangalore | NULL  |       NULL |
+|    106 | Divya Reddy  | HR         | Recruiter        | 40000.00 | 2024-01-05   | Hyderabad | NULL  |       NULL |
+|    107 | Suresh Babu  | Sales      | Executive        | 42000.00 | 2022-09-12   | Hyderabad | NULL  |       NULL |
+|    108 | Anjali Devi  | IT         | Developer        | 77000.00 | 2019-05-30   | Chennai   | NULL  |       NULL |
+|    109 | Mahesh Kumar | Sales      | Manager          | 65000.00 | 2020-02-14   | Bangalore | NULL  |       NULL |
+|    110 | Lakshmi Rao  | Finance    | Analyst          | 52000.00 | 2023-07-22   | Hyderabad | NULL  |       NULL |
+|    111 | Rahul Singh  | IT         | Developer        | 55000.00 | 2024-05-15   | Hyderabad | NULL  |       NULL |
+|    112 | Shruthi      | IT         | Tester           | 77000.00 | 2024-07-23   | Chennai   | NULL  |       NULL |
+|    113 | Gautham Sai  | IT         | AI & ML Engineer | 99000.00 | 2024-02-27   | Banglore  | NULL  |       NULL |
+|    114 | Nirup        | IT         | CyberSecurity    | 82500.00 | 2025-10-30   | Hyderabad | NULL  |       NULL |
++--------+--------------+------------+------------------+----------+--------------+-----------+-------+------------+
+14 rows in set (0.00 sec)
+
+mysql> delete from employees where emp-id = 110;
+ERROR 1054 (42S22): Unknown column 'emp' in 'where clause'
+mysql> delete from employees where emp_id = 110;
+Query OK, 1 row affected (0.04 sec)
+
+mysql> delete from employees where sal < 40000;
+ERROR 1054 (42S22): Unknown column 'sal' in 'where clause'
+mysql> delete from employees where salary < 40000;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delete from employees where department = 'Finance';
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select * from employees;
++--------+--------------+------------+------------------+----------+--------------+-----------+-------+------------+
+| emp_id | emp_name     | department | job_role         | salary   | joining_date | location  | email | experience |
++--------+--------------+------------+------------------+----------+--------------+-----------+-------+------------+
+|    101 | Ravi Kumar   | IT         | Developer        | 55000.00 | 2023-01-15   | Hyderabad | NULL  |       NULL |
+|    102 | Priya Sharma | HR         | HR Manager       | 60000.00 | 2022-06-20   | Hyderabad | NULL  |       NULL |
+|    103 | Kiran Reddy  | IT         | Senior Tester    | 44000.00 | 2023-03-10   | Hyderabad | NULL  |       NULL |
+|    105 | Arun Kumar   | IT         | Developer        | 66000.00 | 2020-08-18   | Bangalore | NULL  |       NULL |
+|    106 | Divya Reddy  | HR         | Recruiter        | 40000.00 | 2024-01-05   | Hyderabad | NULL  |       NULL |
+|    107 | Suresh Babu  | Sales      | Executive        | 42000.00 | 2022-09-12   | Hyderabad | NULL  |       NULL |
+|    108 | Anjali Devi  | IT         | Developer        | 77000.00 | 2019-05-30   | Chennai   | NULL  |       NULL |
+|    109 | Mahesh Kumar | Sales      | Manager          | 65000.00 | 2020-02-14   | Bangalore | NULL  |       NULL |
+|    111 | Rahul Singh  | IT         | Developer        | 55000.00 | 2024-05-15   | Hyderabad | NULL  |       NULL |
+|    112 | Shruthi      | IT         | Tester           | 77000.00 | 2024-07-23   | Chennai   | NULL  |       NULL |
+|    113 | Gautham Sai  | IT         | AI & ML Engineer | 99000.00 | 2024-02-27   | Banglore  | NULL  |       NULL |
+|    114 | Nirup        | IT         | CyberSecurity    | 82500.00 | 2025-10-30   | Hyderabad | NULL  |       NULL |
++--------+--------------+------------+------------------+----------+--------------+-----------+-------+------------+
+12 rows in set (0.00 sec)
