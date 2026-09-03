@@ -1,0 +1,379 @@
+mysql> use students;
+Database changed
+mysql> create table departments(
+    -> dept_id int primary key,
+    -> dept_name varchar(50)
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> insert into departments(1,'Artificial Intelligence and Machine Learning'),(2,'CyberSecurity'),(3,'Human Resources'),(4,'Blockchain'),(5,'Data Analytics');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1,'Artificial Intelligence and Machine Learning'),(2,'CyberSecurity'),(3,'Human ' at line 1
+mysql> insert into departments(1,'AI & ML'),(2,'CyberSecurity'),(3,'Human Resources'),(4,'Blockchain'),(5,'Data Analytics');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1,'AI & ML'),(2,'CyberSecurity'),(3,'Human Resources'),(4,'Blockchain'),(5,'Data' at line 1
+mysql> insert into departments values(1,'AI & ML'),(2,'CyberSecurity'),(3,'Human Resources'),(4,'Blockchain'),(5,'Data Analytics');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from departments;
++---------+-----------------+
+| dept_id | dept_name       |
++---------+-----------------+
+|       1 | AI & ML         |
+|       2 | CyberSecurity   |
+|       3 | Human Resources |
+|       4 | Blockchain      |
+|       5 | Data Analytics  |
++---------+-----------------+
+5 rows in set (0.00 sec)
+
+mysql> create table std(
+    -> std_id int primary key,
+    -> name varchar(100),
+    -> dept_id int,
+    -> foreign key(dept_id)
+    -> references departments(dept_id)
+    -> on delete cascade on update cascade
+    -> );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'std(
+std_id int primary key,
+name varchar(100),
+dept_id int,
+foreign key(dept_id' at line 1
+mysql> CREATE TABLE students (
+    ->     student_id INT PRIMARY KEY,
+    ->     name VARCHAR(100),
+    ->     dept_id INT,
+    ->     FOREIGN KEY(dept_id)
+    ->         REFERENCES departments(dept_id)
+    ->         ON DELETE CASCADE ON UPDATE CASCADE
+    -> );
+ERROR 1050 (42S01): Table 'students' already exists
+mysql> CREATE TABLE student(
+    -> student_id INT PRIMARY KEY,
+    -> name VARCHAR(100),
+    -> dept_id INT,
+    -> FOREIGN KEY(dept_id)
+    -> REFERENCES departments(dept_id)
+    -> ON DELETE CASCADE ON UPDATE CASCADE
+    -> );
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> insert into student values(23,'Gautham',1),(27,'Shalini',1),(33,'Nirup',2),(41,'Sandeep',5),(18,'Gautham Krishna',4);
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from students;
++-----------+-----------------+------------------+------+-------+------------+-----------------+----------------------------------------------+
+| stdid     | firstname       | lastname         | age  | marks | percentage | student_address | department                                   |
++-----------+-----------------+------------------+------+-------+------------+-----------------+----------------------------------------------+
+| GVP202623 | Gautham Sai     | Karthikeya Reddy |   21 |    89 |         91 | Akkayapalem     | Artificial Intelligence and Machine Learning |
+| GVP202627 | Shalini         | Kolli            |   18 |    91 |         94 | Gajuwaka        | Artificial Intelligence                      |
+| GVP202618 | Gautham Krishna | Ganta            |   22 |    85 |         90 | Seethamadhara   | Blockchain                                   |
+| GVP202611 | Nirup           | K                |   25 |    87 |        100 | MVP Sector 1    | CyberSecurity                                |
+| GVP202629 | Sandeep         | Koviri           |   23 |    98 |         90 | Gajuwaka        | M.Sc Computer Science                        |
+| GVP202634 | Durga Prasad    | Gara             |   23 |    81 |         76 | Madhurawada     | M.Sc Computer Science                        |
++-----------+-----------------+------------------+------+-------+------------+-----------------+----------------------------------------------+
+6 rows in set (0.05 sec)
+
+mysql> select * from student;
++------------+-----------------+---------+
+| student_id | name            | dept_id |
++------------+-----------------+---------+
+|         18 | Gautham Krishna |       4 |
+|         23 | Gautham         |       1 |
+|         27 | Shalini         |       1 |
+|         33 | Nirup           |       2 |
+|         41 | Sandeep         |       5 |
++------------+-----------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> select * from departments;
++---------+-----------------+
+| dept_id | dept_name       |
++---------+-----------------+
+|       1 | AI & ML         |
+|       2 | CyberSecurity   |
+|       3 | Human Resources |
+|       4 | Blockchain      |
+|       5 | Data Analytics  |
++---------+-----------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into department values(6,'school');
+ERROR 1146 (42S02): Table 'students.department' doesn't exist
+mysql> insert into departments values(6,'school');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values(2,'Yeshu',6);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> delete from departments where dept_id = 6;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from departments;
++---------+-----------------+
+| dept_id | dept_name       |
++---------+-----------------+
+|       1 | AI & ML         |
+|       2 | CyberSecurity   |
+|       3 | Human Resources |
+|       4 | Blockchain      |
+|       5 | Data Analytics  |
++---------+-----------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into departments values(6,'school');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select * from departments;
++---------+-----------------+
+| dept_id | dept_name       |
++---------+-----------------+
+|       1 | AI & ML         |
+|       2 | CyberSecurity   |
+|       3 | Human Resources |
+|       4 | Blockchain      |
+|       5 | Data Analytics  |
+|       6 | school          |
++---------+-----------------+
+6 rows in set (0.00 sec)
+
+mysql> insert into student values(2,'Yeshu',6);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select * from student;
++------------+-----------------+---------+
+| student_id | name            | dept_id |
++------------+-----------------+---------+
+|          2 | Yeshu           |       6 |
+|         18 | Gautham Krishna |       4 |
+|         23 | Gautham         |       1 |
+|         27 | Shalini         |       1 |
+|         33 | Nirup           |       2 |
+|         41 | Sandeep         |       5 |
++------------+-----------------+---------+
+6 rows in set (0.00 sec)
+
+mysql> delete from departments where dept_id = 6;
+Query OK, 1 row affected (0.05 sec)
+
+mysql> select * from departments;
++---------+-----------------+
+| dept_id | dept_name       |
++---------+-----------------+
+|       1 | AI & ML         |
+|       2 | CyberSecurity   |
+|       3 | Human Resources |
+|       4 | Blockchain      |
+|       5 | Data Analytics  |
++---------+-----------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from departments;
++---------+-----------------+
+| dept_id | dept_name       |
++---------+-----------------+
+|       1 | AI & ML         |
+|       2 | CyberSecurity   |
+|       3 | Human Resources |
+|       4 | Blockchain      |
+|       5 | Data Analytics  |
++---------+-----------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student;
++------------+-----------------+---------+
+| student_id | name            | dept_id |
++------------+-----------------+---------+
+|         18 | Gautham Krishna |       4 |
+|         23 | Gautham         |       1 |
+|         27 | Shalini         |       1 |
+|         33 | Nirup           |       2 |
+|         41 | Sandeep         |       5 |
++------------+-----------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> update departments set dept_id = 100 where dept_id = 3;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from departments;
++---------+-----------------+
+| dept_id | dept_name       |
++---------+-----------------+
+|       1 | AI & ML         |
+|       2 | CyberSecurity   |
+|       4 | Blockchain      |
+|       5 | Data Analytics  |
+|     100 | Human Resources |
++---------+-----------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student;
++------------+-----------------+---------+
+| student_id | name            | dept_id |
++------------+-----------------+---------+
+|         18 | Gautham Krishna |       4 |
+|         23 | Gautham         |       1 |
+|         27 | Shalini         |       1 |
+|         33 | Nirup           |       2 |
+|         41 | Sandeep         |       5 |
++------------+-----------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> show tables;
++--------------------+
+| Tables_in_students |
++--------------------+
+| backupof_employees |
+| departments        |
+| emp                |
+| employees          |
+| products           |
+| student            |
+| students           |
++--------------------+
+7 rows in set (0.07 sec)
+
+mysql> CREATE TABLE Products (
+    ->  id INT,
+    ->  name VARCHAR(100),
+    ->  price DECIMAL(10,2),
+    ->  qty INT
+    ->  price DECIMAL(10,2),^C
+mysql> create table prod(
+    -> id INT,
+    -> name varchar(100),
+    -> price decimal(10,2),
+    -> qty int
+    -> );
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> insert into prod values(1, 'Pen', 10.00, 100),
+    ->  (2, 'Notebook', 25.00, 50),
+    ->  (3, 'Pencil', 5.00, 200),
+    ->  (4, 'Eraser', 3.00, 300),
+    ->  (5, 'Marker', 15.00, 80),
+    ->  (6, 'Scale', 20.00, 150),
+    ->  (7, 'Sharpener', 8.00, 120),
+    ->  (8, 'Geometry Box', 120.00, 40),
+    ->  (9, 'Sketch Pen', 60.00, 75),
+    ->  (10, 'Crayons', 90.00, 55);
+Query OK, 10 rows affected (0.00 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> select * from prod;
++------+--------------+--------+------+
+| id   | name         | price  | qty  |
++------+--------------+--------+------+
+|    1 | Pen          |  10.00 |  100 |
+|    2 | Notebook     |  25.00 |   50 |
+|    3 | Pencil       |   5.00 |  200 |
+|    4 | Eraser       |   3.00 |  300 |
+|    5 | Marker       |  15.00 |   80 |
+|    6 | Scale        |  20.00 |  150 |
+|    7 | Sharpener    |   8.00 |  120 |
+|    8 | Geometry Box | 120.00 |   40 |
+|    9 | Sketch Pen   |  60.00 |   75 |
+|   10 | Crayons      |  90.00 |   55 |
++------+--------------+--------+------+
+10 rows in set (0.00 sec)
+
+mysql> select name,price,(price*0.12) as tax from prod;
++--------------+--------+---------+
+| name         | price  | tax     |
++--------------+--------+---------+
+| Pen          |  10.00 |  1.2000 |
+| Notebook     |  25.00 |  3.0000 |
+| Pencil       |   5.00 |  0.6000 |
+| Eraser       |   3.00 |  0.3600 |
+| Marker       |  15.00 |  1.8000 |
+| Scale        |  20.00 |  2.4000 |
+| Sharpener    |   8.00 |  0.9600 |
+| Geometry Box | 120.00 | 14.4000 |
+| Sketch Pen   |  60.00 |  7.2000 |
+| Crayons      |  90.00 | 10.8000 |
++--------------+--------+---------+
+10 rows in set (0.04 sec)
+
+mysql> select name,price, (price-5) as discountprice from prod;
++--------------+--------+---------------+
+| name         | price  | discountprice |
++--------------+--------+---------------+
+| Pen          |  10.00 |          5.00 |
+| Notebook     |  25.00 |         20.00 |
+| Pencil       |   5.00 |          0.00 |
+| Eraser       |   3.00 |         -2.00 |
+| Marker       |  15.00 |         10.00 |
+| Scale        |  20.00 |         15.00 |
+| Sharpener    |   8.00 |          3.00 |
+| Geometry Box | 120.00 |        115.00 |
+| Sketch Pen   |  60.00 |         55.00 |
+| Crayons      |  90.00 |         85.00 |
++--------------+--------+---------------+
+10 rows in set (0.04 sec)
+
+mysql> select name, price,qty,(price*qty) as inventoryprice from prod;
++--------------+--------+------+----------------+
+| name         | price  | qty  | inventoryprice |
++--------------+--------+------+----------------+
+| Pen          |  10.00 |  100 |        1000.00 |
+| Notebook     |  25.00 |   50 |        1250.00 |
+| Pencil       |   5.00 |  200 |        1000.00 |
+| Eraser       |   3.00 |  300 |         900.00 |
+| Marker       |  15.00 |   80 |        1200.00 |
+| Scale        |  20.00 |  150 |        3000.00 |
+| Sharpener    |   8.00 |  120 |         960.00 |
+| Geometry Box | 120.00 |   40 |        4800.00 |
+| Sketch Pen   |  60.00 |   75 |        4500.00 |
+| Crayons      |  90.00 |   55 |        4950.00 |
++--------------+--------+------+----------------+
+10 rows in set (0.00 sec)
+
+mysql> select name, price,qty,((price*qty)/10) as perunitprice from prod;
++--------------+--------+------+--------------+
+| name         | price  | qty  | perunitprice |
++--------------+--------+------+--------------+
+| Pen          |  10.00 |  100 |   100.000000 |
+| Notebook     |  25.00 |   50 |   125.000000 |
+| Pencil       |   5.00 |  200 |   100.000000 |
+| Eraser       |   3.00 |  300 |    90.000000 |
+| Marker       |  15.00 |   80 |   120.000000 |
+| Scale        |  20.00 |  150 |   300.000000 |
+| Sharpener    |   8.00 |  120 |    96.000000 |
+| Geometry Box | 120.00 |   40 |   480.000000 |
+| Sketch Pen   |  60.00 |   75 |   450.000000 |
+| Crayons      |  90.00 |   55 |   495.000000 |
++--------------+--------+------+--------------+
+10 rows in set (0.00 sec)
+
+mysql> select name, price,qty,((price/qty)*10) as perunitprice from prod;
++--------------+--------+------+--------------+
+| name         | price  | qty  | perunitprice |
++--------------+--------+------+--------------+
+| Pen          |  10.00 |  100 |     1.000000 |
+| Notebook     |  25.00 |   50 |     5.000000 |
+| Pencil       |   5.00 |  200 |     0.250000 |
+| Eraser       |   3.00 |  300 |     0.100000 |
+| Marker       |  15.00 |   80 |     1.875000 |
+| Scale        |  20.00 |  150 |     1.333333 |
+| Sharpener    |   8.00 |  120 |     0.666667 |
+| Geometry Box | 120.00 |   40 |    30.000000 |
+| Sketch Pen   |  60.00 |   75 |     8.000000 |
+| Crayons      |  90.00 |   55 |    16.363636 |
++--------------+--------+------+--------------+
+10 rows in set (0.00 sec)
+
+mysql> select name,qty from prod where qthy % 50 != 0;
+ERROR 1054 (42S22): Unknown column 'qthy' in 'where clause'
+mysql> select name,qty from prod where (qty % 50)!= 0;
++--------------+------+
+| name         | qty  |
++--------------+------+
+| Marker       |   80 |
+| Sharpener    |  120 |
+| Geometry Box |   40 |
+| Sketch Pen   |   75 |
+| Crayons      |   55 |
++--------------+------+
+5 rows in set (0.00 sec)
