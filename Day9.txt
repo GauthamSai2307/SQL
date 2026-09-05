@@ -1,0 +1,33 @@
+Clauses in SQL:
+
+Clauses are the building blocks of SQL statements. (like how data is selected, filtered, grouped, or ordered).
+They can be independent or dependent, and they serve different functions within a statement.
+
+Most common clauses include:  
+1. WHERE: Filters the rows based on specified conditions. It is used as comparson operators, logical operators, and pattern matching.
+
+syntax : SELECT column1, column2 FROM table_name WHERE condition;
+
+2. GROUP BY: Groups rows that have the same values in one or more specified columns and it is commonly used 
+with aggregate functions to create summary rows.
+
+syntax : SELECT column1, COUNT(column2) FROM table_name GROUP BY column1; 
+
+using the aggregate functions like SUM(), AVG(), COUNT(), MIN(), MAX() to perform calculations on the grouped data.
+syntax : SELECT column1, aggregate_function(column2) FROM table_name GROUP BY column1;
+
+3. HAVING: Filters groups based on specified conditions, znd only after the GROUP BY clause. It is similar to the WHERE clause, 
+it works with the grouped data rather than the individual rows, but it is used for filtering aggregated data.
+
+syntax : SELECT column1, aggregate_function(column2) FROM table_name GROUP BY column1 HAVING condition;
+
+4. ORDER BY: Sorts the result set based on specified columns in ascending or descending order.
+It follows ascending order by default, but you can specify DESC for descending order.
+
+syntax : SELECT column1, column2 FROM table_name ORDER BY column1 ASC|DESC; 
+
+
+execution order of clauses in SQL statements:
+
+from --> where --> group by --> having --> select --> order by
+

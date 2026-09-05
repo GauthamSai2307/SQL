@@ -1,0 +1,792 @@
+
+mysql> use students;
+Database changed
+mysql> show tables;
++--------------------+
+| Tables_in_students |
++--------------------+
+| backupof_employees |
+| departments        |
+| emp                |
+| emplo              |
+| employees          |
+| empp               |
+| orders             |
+| prod               |
+| products           |
+| projects           |
+| student            |
+| students           |
+| studentscores      |
++--------------------+
+13 rows in set (0.01 sec)
+
+mysql> drop table student
+    -> ;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> drop table studentscores;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create table student(
+    ->     StudentID INT AUTO_INCREMENT PRIMARY KEY,
+    ->     Name VARCHAR(50),
+    ->     Age INT,
+    ->     Department VARCHAR(30),
+    ->     Marks INT,
+    ->     City VARCHAR(30)
+    -> );
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> insert into students(name,age,department,marks,city) values
+    -> ('Anil', 20, 'CSE', 85, 'Hyderabad'),
+    -> ('Sneha', 22, 'ECE', 75, 'Mumbai'),
+    -> ('Ravi', 20, 'CSE', NULL, 'Hyderabad'),
+    -> ('Divya', 23, 'MECH', 65, NULL),
+    -> ('Kiran', 22, 'ECE', 75, 'Pune'),
+    -> ('Varun', 21, 'CSE', 92, 'Chennai'),
+    -> ('Priya', 20, 'EEE', 88, 'Delhi'),
+    -> ('John', 22, 'MECH', 55, 'Mumbai'),
+    -> ('Rekha', 21, 'ECE', 75, 'Pune'),
+    -> ('Ramesh', 23, 'EEE', NULL, 'Delhi');
+ERROR 1054 (42S22): Unknown column 'name' in 'field list'
+mysql> insert into students(Name,Age,Department,marks,City) values
+    -> ('Anil', 20, 'CSE', 85, 'Hyderabad'),
+    -> ('Sneha', 22, 'ECE', 75, 'Mumbai'),
+    -> ('Ravi', 20, 'CSE', NULL, 'Hyderabad'),
+    -> ('Divya', 23, 'MECH', 65, NULL),
+    -> ('Kiran', 22, 'ECE', 75, 'Pune'),
+    -> ('Varun', 21, 'CSE', 92, 'Chennai'),
+    -> ('Priya', 20, 'EEE', 88, 'Delhi'),
+    -> ('John', 22, 'MECH', 55, 'Mumbai'),
+    -> ('Rekha', 21, 'ECE', 75, 'Pune'),
+    -> ('Ramesh', 23, 'EEE', NULL, 'Delhi');
+ERROR 1054 (42S22): Unknown column 'Name' in 'field list'
+mysql> insert into student(Name,Age,Department,marks,City) values
+    -> ('Anil', 20, 'CSE', 85, 'Hyderabad'),
+    -> ('Sneha', 22, 'ECE', 75, 'Mumbai'),
+    -> ('Ravi', 20, 'CSE', NULL, 'Hyderabad'),
+    -> ('Divya', 23, 'MECH', 65, NULL),
+    -> ('Kiran', 22, 'ECE', 75, 'Pune'),
+    -> ('Varun', 21, 'CSE', 92, 'Chennai'),
+    -> ('Priya', 20, 'EEE', 88, 'Delhi'),
+    -> ('John', 22, 'MECH', 55, 'Mumbai'),
+    -> ('Rekha', 21, 'ECE', 75, 'Pune'),
+    -> ('Ramesh', 23, 'EEE', NULL, 'Delhi');
+Query OK, 10 rows affected (0.06 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++-----------+--------+------+------------+-------+-----------+
+| StudentID | Name   | Age  | Department | Marks | City      |
++-----------+--------+------+------------+-------+-----------+
+|         1 | Anil   |   20 | CSE        |    85 | Hyderabad |
+|         2 | Sneha  |   22 | ECE        |    75 | Mumbai    |
+|         3 | Ravi   |   20 | CSE        |  NULL | Hyderabad |
+|         4 | Divya  |   23 | MECH       |    65 | NULL      |
+|         5 | Kiran  |   22 | ECE        |    75 | Pune      |
+|         6 | Varun  |   21 | CSE        |    92 | Chennai   |
+|         7 | Priya  |   20 | EEE        |    88 | Delhi     |
+|         8 | John   |   22 | MECH       |    55 | Mumbai    |
+|         9 | Rekha  |   21 | ECE        |    75 | Pune      |
+|        10 | Ramesh |   23 | EEE        |  NULL | Delhi     |
++-----------+--------+------+------------+-------+-----------+
+10 rows in set (0.00 sec)
+
+mysql> CREATE TABLE sales (
+    ->    sale_id INT PRIMARY KEY,
+    ->    product VARCHAR(50),
+    ->    category VARCHAR(50),
+    ->    units_sold INT,
+    ->    unit_price INT,
+    ->    region VARCHAR(50)
+    -> );
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> INSERT INTO sales (sale_id, product, category, units_sold, unit_price, region) VALUES
+    -> (1,  'Keyboard',    'Electronics', 10, 1200,  'North'),
+    -> (2,  'Monitor',     'Electronics', 5,  7000,  'South'),
+    -> (3,  'Chair',       'Furniture',   15, 2500,  'North'),
+    -> (4,  'Desk',        'Furniture',   7,  4500,  'West'),
+    -> (5,  'Mouse',       'Electronics', 20, 800,   'East'),
+    -> (6,  'Sofa',        'Furniture',   3,  15000, 'South'),
+    -> (7,  'Headphones',  'Electronics', 8,  1800,  'North'),
+    -> (8,  'Laptop',      'Electronics', 6,  55000, 'West'),
+    -> (9,  'Table',       'Furniture',   12, 6000,  'East'),
+    -> (10, 'Fan',         'HomeAppliance', 18, 3000, 'South'),
+    -> (11, 'AC',          'HomeAppliance', 4, 35000, 'North'),
+    -> (12, 'Cupboard',    'Furniture',   5, 12000, 'West'),
+    -> (13, 'Printer',     'Electronics', 9, 9000,  'East'),
+    -> (14, 'Bed',         'Furniture',   2, 25000, 'South'),
+    -> (15, 'Mobile',      'Electronics', 14, 20000, 'North');
+Query OK, 15 rows affected (0.00 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+
+mysql> select * from sales;
++---------+------------+---------------+------------+------------+--------+
+| sale_id | product    | category      | units_sold | unit_price | region |
++---------+------------+---------------+------------+------------+--------+
+|       1 | Keyboard   | Electronics   |         10 |       1200 | North  |
+|       2 | Monitor    | Electronics   |          5 |       7000 | South  |
+|       3 | Chair      | Furniture     |         15 |       2500 | North  |
+|       4 | Desk       | Furniture     |          7 |       4500 | West   |
+|       5 | Mouse      | Electronics   |         20 |        800 | East   |
+|       6 | Sofa       | Furniture     |          3 |      15000 | South  |
+|       7 | Headphones | Electronics   |          8 |       1800 | North  |
+|       8 | Laptop     | Electronics   |          6 |      55000 | West   |
+|       9 | Table      | Furniture     |         12 |       6000 | East   |
+|      10 | Fan        | HomeAppliance |         18 |       3000 | South  |
+|      11 | AC         | HomeAppliance |          4 |      35000 | North  |
+|      12 | Cupboard   | Furniture     |          5 |      12000 | West   |
+|      13 | Printer    | Electronics   |          9 |       9000 | East   |
+|      14 | Bed        | Furniture     |          2 |      25000 | South  |
+|      15 | Mobile     | Electronics   |         14 |      20000 | North  |
++---------+------------+---------------+------------+------------+--------+
+15 rows in set (0.00 sec)
+
+mysql> select * from student where department = 'CSE';
++-----------+-------+------+------------+-------+-----------+
+| StudentID | Name  | Age  | Department | Marks | City      |
++-----------+-------+------+------------+-------+-----------+
+|         1 | Anil  |   20 | CSE        |    85 | Hyderabad |
+|         3 | Ravi  |   20 | CSE        |  NULL | Hyderabad |
+|         6 | Varun |   21 | CSE        |    92 | Chennai   |
++-----------+-------+------+------------+-------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from student where marks > 80;
++-----------+-------+------+------------+-------+-----------+
+| StudentID | Name  | Age  | Department | Marks | City      |
++-----------+-------+------+------------+-------+-----------+
+|         1 | Anil  |   20 | CSE        |    85 | Hyderabad |
+|         6 | Varun |   21 | CSE        |    92 | Chennai   |
+|         7 | Priya |   20 | EEE        |    88 | Delhi     |
++-----------+-------+------+------------+-------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from student where age = 22;
++-----------+-------+------+------------+-------+--------+
+| StudentID | Name  | Age  | Department | Marks | City   |
++-----------+-------+------+------------+-------+--------+
+|         2 | Sneha |   22 | ECE        |    75 | Mumbai |
+|         5 | Kiran |   22 | ECE        |    75 | Pune   |
+|         8 | John  |   22 | MECH       |    55 | Mumbai |
++-----------+-------+------+------------+-------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from student where city = 'Mumbai';
++-----------+-------+------+------------+-------+--------+
+| StudentID | Name  | Age  | Department | Marks | City   |
++-----------+-------+------+------------+-------+--------+
+|         2 | Sneha |   22 | ECE        |    75 | Mumbai |
+|         8 | John  |   22 | MECH       |    55 | Mumbai |
++-----------+-------+------+------------+-------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from student where marks < 70;
++-----------+-------+------+------------+-------+--------+
+| StudentID | Name  | Age  | Department | Marks | City   |
++-----------+-------+------+------------+-------+--------+
+|         4 | Divya |   23 | MECH       |    65 | NULL   |
+|         8 | John  |   22 | MECH       |    55 | Mumbai |
++-----------+-------+------+------------+-------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from student as count group by count(department);
+ERROR 1111 (HY000): Invalid use of group function
+mysql> select * from student group by count(department);
+ERROR 1111 (HY000): Invalid use of group function
+mysql> select department,count(*) from student as count group by department;
++------------+----------+
+| department | count(*) |
++------------+----------+
+| CSE        |        3 |
+| ECE        |        3 |
+| MECH       |        2 |
+| EEE        |        2 |
++------------+----------+
+4 rows in set (0.00 sec)
+
+mysql> select department,avg(marks) as avg_score from student group by department;
++------------+-----------+
+| department | avg_score |
++------------+-----------+
+| CSE        |   88.5000 |
+| ECE        |   75.0000 |
+| MECH       |   60.0000 |
+| EEE        |   88.0000 |
++------------+-----------+
+4 rows in set (0.04 sec)
+
+mysql> select department,max(marks) as high_score from student group by department;
++------------+------------+
+| department | high_score |
++------------+------------+
+| CSE        |         92 |
+| ECE        |         75 |
+| MECH       |         65 |
+| EEE        |         88 |
++------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select department,min(marks) as low_score from student group by department;
++------------+-----------+
+| department | low_score |
++------------+-----------+
+| CSE        |        85 |
+| ECE        |        75 |
+| MECH       |        55 |
+| EEE        |        88 |
++------------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> select department,sum(marks) as total_dept_score from student group by department;
++------------+------------------+
+| department | total_dept_score |
++------------+------------------+
+| CSE        |              177 |
+| ECE        |              225 |
+| MECH       |              120 |
+| EEE        |               88 |
++------------+------------------+
+4 rows in set (0.00 sec)
+
+mysql> select department,count(*) from student as count group by department having count(*) > 2;
++------------+----------+
+| department | count(*) |
++------------+----------+
+| CSE        |        3 |
+| ECE        |        3 |
++------------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select department,avg(marks) from student as avg_score group by department having avg_score > 75;
+ERROR 1054 (42S22): Unknown column 'avg_score' in 'having clause'
+mysql> select department,avg(marks) from student as avg_score group by department having avg(marks) > 75;
++------------+------------+
+| department | avg(marks) |
++------------+------------+
+| CSE        |    88.5000 |
+| EEE        |    88.0000 |
++------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select department,max(marks) from student as max_score group by department having max_score > 150;
+ERROR 1054 (42S22): Unknown column 'max_score' in 'having clause'
+mysql> select department,max(marks) from student as max_score group by department having max(marks) > 150;
+Empty set (0.00 sec)
+
+mysql> select department,max(marks) from student as max_score group by department having max(marks) > 150;
+Empty set (0.00 sec)
+
+mysql> select department,min(marks) from student as min_score group by department having min(marks) > 150;
+Empty set (0.00 sec)
+
+mysql> select department,min(marks) from student as min_score group by department having min(marks) > 90;
+Empty set (0.00 sec)
+
+mysql> select department,sum(marks) from student as total_score group by department having sum(marks) > 150;
++------------+------------+
+| department | sum(marks) |
++------------+------------+
+| CSE        |        177 |
+| ECE        |        225 |
++------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select department,max(marks) from student as max_score group by department having max(marks) > 90;
++------------+------------+
+| department | max(marks) |
++------------+------------+
+| CSE        |         92 |
++------------+------------+
+1 row in set (0.00 sec)
+
+mysql> select department,min(marks) from student as min_score group by department having min(marks) > 60;
++------------+------------+
+| department | min(marks) |
++------------+------------+
+| CSE        |         85 |
+| ECE        |         75 |
+| EEE        |         88 |
++------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select department,min(marks) from student as min_score group by department having min(marks) < 60;
++------------+------------+
+| department | min(marks) |
++------------+------------+
+| MECH       |         55 |
++------------+------------+
+1 row in set (0.00 sec)
+
+mysql> select department,min(marks) as min_score
+    -> from student
+    -> group by department
+    -> having min_score < 60;
++------------+-----------+
+| department | min_score |
++------------+-----------+
+| MECH       |        55 |
++------------+-----------+
+1 row in set (0.00 sec)
+
+mysql> select * from student order by name;
++-----------+--------+------+------------+-------+-----------+
+| StudentID | Name   | Age  | Department | Marks | City      |
++-----------+--------+------+------------+-------+-----------+
+|         1 | Anil   |   20 | CSE        |    85 | Hyderabad |
+|         4 | Divya  |   23 | MECH       |    65 | NULL      |
+|         8 | John   |   22 | MECH       |    55 | Mumbai    |
+|         5 | Kiran  |   22 | ECE        |    75 | Pune      |
+|         7 | Priya  |   20 | EEE        |    88 | Delhi     |
+|        10 | Ramesh |   23 | EEE        |  NULL | Delhi     |
+|         3 | Ravi   |   20 | CSE        |  NULL | Hyderabad |
+|         9 | Rekha  |   21 | ECE        |    75 | Pune      |
+|         2 | Sneha  |   22 | ECE        |    75 | Mumbai    |
+|         6 | Varun  |   21 | CSE        |    92 | Chennai   |
++-----------+--------+------+------------+-------+-----------+
+10 rows in set (0.04 sec)
+
+mysql> select * from student order by name asc;
++-----------+--------+------+------------+-------+-----------+
+| StudentID | Name   | Age  | Department | Marks | City      |
++-----------+--------+------+------------+-------+-----------+
+|         1 | Anil   |   20 | CSE        |    85 | Hyderabad |
+|         4 | Divya  |   23 | MECH       |    65 | NULL      |
+|         8 | John   |   22 | MECH       |    55 | Mumbai    |
+|         5 | Kiran  |   22 | ECE        |    75 | Pune      |
+|         7 | Priya  |   20 | EEE        |    88 | Delhi     |
+|        10 | Ramesh |   23 | EEE        |  NULL | Delhi     |
+|         3 | Ravi   |   20 | CSE        |  NULL | Hyderabad |
+|         9 | Rekha  |   21 | ECE        |    75 | Pune      |
+|         2 | Sneha  |   22 | ECE        |    75 | Mumbai    |
+|         6 | Varun  |   21 | CSE        |    92 | Chennai   |
++-----------+--------+------+------------+-------+-----------+
+10 rows in set (0.00 sec)
+
+mysql> select * from student order by name dsc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'dsc' at line 1
+mysql> select * from student order by name dec;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'dec' at line 1
+mysql> select * from student order by name desc;
++-----------+--------+------+------------+-------+-----------+
+| StudentID | Name   | Age  | Department | Marks | City      |
++-----------+--------+------+------------+-------+-----------+
+|         6 | Varun  |   21 | CSE        |    92 | Chennai   |
+|         2 | Sneha  |   22 | ECE        |    75 | Mumbai    |
+|         9 | Rekha  |   21 | ECE        |    75 | Pune      |
+|         3 | Ravi   |   20 | CSE        |  NULL | Hyderabad |
+|        10 | Ramesh |   23 | EEE        |  NULL | Delhi     |
+|         7 | Priya  |   20 | EEE        |    88 | Delhi     |
+|         5 | Kiran  |   22 | ECE        |    75 | Pune      |
+|         8 | John   |   22 | MECH       |    55 | Mumbai    |
+|         4 | Divya  |   23 | MECH       |    65 | NULL      |
+|         1 | Anil   |   20 | CSE        |    85 | Hyderabad |
++-----------+--------+------+------------+-------+-----------+
+10 rows in set (0.00 sec)
+
+mysql> select * from student order by marks desc;
++-----------+--------+------+------------+-------+-----------+
+| StudentID | Name   | Age  | Department | Marks | City      |
++-----------+--------+------+------------+-------+-----------+
+|         6 | Varun  |   21 | CSE        |    92 | Chennai   |
+|         7 | Priya  |   20 | EEE        |    88 | Delhi     |
+|         1 | Anil   |   20 | CSE        |    85 | Hyderabad |
+|         2 | Sneha  |   22 | ECE        |    75 | Mumbai    |
+|         5 | Kiran  |   22 | ECE        |    75 | Pune      |
+|         9 | Rekha  |   21 | ECE        |    75 | Pune      |
+|         4 | Divya  |   23 | MECH       |    65 | NULL      |
+|         8 | John   |   22 | MECH       |    55 | Mumbai    |
+|         3 | Ravi   |   20 | CSE        |  NULL | Hyderabad |
+|        10 | Ramesh |   23 | EEE        |  NULL | Delhi     |
++-----------+--------+------+------------+-------+-----------+
+10 rows in set (0.00 sec)
+
+mysql> select name,department from student order by marks desc;
++--------+------------+
+| name   | department |
++--------+------------+
+| Varun  | CSE        |
+| Priya  | EEE        |
+| Anil   | CSE        |
+| Sneha  | ECE        |
+| Kiran  | ECE        |
+| Rekha  | ECE        |
+| Divya  | MECH       |
+| John   | MECH       |
+| Ravi   | CSE        |
+| Ramesh | EEE        |
++--------+------------+
+10 rows in set (0.00 sec)
+
+mysql> select name,department,marks from student order by marks desc;
++--------+------------+-------+
+| name   | department | marks |
++--------+------------+-------+
+| Varun  | CSE        |    92 |
+| Priya  | EEE        |    88 |
+| Anil   | CSE        |    85 |
+| Sneha  | ECE        |    75 |
+| Kiran  | ECE        |    75 |
+| Rekha  | ECE        |    75 |
+| Divya  | MECH       |    65 |
+| John   | MECH       |    55 |
+| Ravi   | CSE        |  NULL |
+| Ramesh | EEE        |  NULL |
++--------+------------+-------+
+10 rows in set (0.00 sec)
+
+mysql> select name,department,marks,avg(marks) as avg_score from student group by department having age > 20;
+ERROR 1054 (42S22): Unknown column 'age' in 'having clause'
+mysql> select name,department,marks,avg(marks) as avg_score from student group by department where age > 20;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where age > 20' at line 1
+ ysql> select name,department,marks,avg(marks) as avg_score from student where age > 20 group by department having avg(marks) > 70 order by avg(marks) desc;
+ERROR 1055 (42000): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'students.student.Name' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> SELECT
+    ->     department,
+    ->     AVG(marks) AS avg_score
+    -> FROM student
+    -> WHERE age > 20
+    -> GROUP BY department
+    -> HAVING AVG(marks) > 70
+    -> ORDER BY avg_score DESC;
++------------+-----------+
+| department | avg_score |
++------------+-----------+
+| CSE        |   92.0000 |
+| ECE        |   75.0000 |
++------------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select city,count(*) as count
+    -> from student
+    -> where marks > 70
+    -> group by city
+    -> having count > 1
+    -> order by city;
++------+-------+
+| city | count |
++------+-------+
+| Pune |     2 |
++------+-------+
+1 row in set (0.00 sec)
+
+mysql> select department,sum(marks) as total
+    -> from student
+    -> where city in ('Hyderabad','Pune')
+    -> group by department
+    -> having total > 100
+    ->
+    -> order by total;
++------------+-------+
+| department | total |
++------------+-------+
+| ECE        |   150 |
++------------+-------+
+1 row in set (0.00 sec)
+
+mysql> select city,max(marks) as max_score
+    -> from student
+    -> where department = 'ECE'
+    -> group by city
+    -> having max_score > 70
+    -> order by max_score;
++--------+-----------+
+| city   | max_score |
++--------+-----------+
+| Mumbai |        75 |
+| Pune   |        75 |
++--------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select department,avg(marks) as avg_score
+    -> from student
+    -> where city is not null
+    -> group by department ^C
+mysql> select department,avg(age) as avg_age
+    -> from student
+    -> where city is not null
+    -> group by department
+    -> having avg_age > 20
+    -> order by asc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'asc' at line 6
+mysql> select department,avg(age) as avg_age
+    -> from student
+    -> where city is not null
+    -> group by department
+    -> having avg_age > 20
+    -> order by avg_score asc;
+ERROR 1054 (42S22): Unknown column 'avg_score' in 'order clause'
+mysql> select department,avg(age) as avg_age
+    -> from student
+    -> where city is not null
+    -> group by department
+    -> having avg_age > 20
+    -> order by avg_age asc;
++------------+---------+
+| department | avg_age |
++------------+---------+
+| CSE        | 20.3333 |
+| EEE        | 21.5000 |
+| ECE        | 21.6667 |
+| MECH       | 22.0000 |
++------------+---------+
+4 rows in set (0.00 sec)
+
+mysql> select * from salesl;
+ERROR 1146 (42S02): Table 'students.salesl' doesn't exist
+mysql> select * from sales;
++---------+------------+---------------+------------+------------+--------+
+| sale_id | product    | category      | units_sold | unit_price | region |
++---------+------------+---------------+------------+------------+--------+
+|       1 | Keyboard   | Electronics   |         10 |       1200 | North  |
+|       2 | Monitor    | Electronics   |          5 |       7000 | South  |
+|       3 | Chair      | Furniture     |         15 |       2500 | North  |
+|       4 | Desk       | Furniture     |          7 |       4500 | West   |
+|       5 | Mouse      | Electronics   |         20 |        800 | East   |
+|       6 | Sofa       | Furniture     |          3 |      15000 | South  |
+|       7 | Headphones | Electronics   |          8 |       1800 | North  |
+|       8 | Laptop     | Electronics   |          6 |      55000 | West   |
+|       9 | Table      | Furniture     |         12 |       6000 | East   |
+|      10 | Fan        | HomeAppliance |         18 |       3000 | South  |
+|      11 | AC         | HomeAppliance |          4 |      35000 | North  |
+|      12 | Cupboard   | Furniture     |          5 |      12000 | West   |
+|      13 | Printer    | Electronics   |          9 |       9000 | East   |
+|      14 | Bed        | Furniture     |          2 |      25000 | South  |
+|      15 | Mobile     | Electronics   |         14 |      20000 | North  |
++---------+------------+---------------+------------+------------+--------+
+15 rows in set (0.00 sec)
+
+mysql> select category,sum(units_sold) as total
+    -> from sales
+    -> group by category
+    -> havig total > 20;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'havig total > 20' at line 4
+mysql> select category,sum(units_sold) as total
+    -> from sales
+    -> group by category
+    -> having total > 20;
++---------------+-------+
+| category      | total |
++---------------+-------+
+| Electronics   |    72 |
+| Furniture     |    44 |
+| HomeAppliance |    22 |
++---------------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select region,sum(units_sold * unit_price) as revenue
+    -> from sales
+    -> group by region
+    -> having revenue > 50000;
++--------+---------+
+| region | revenue |
++--------+---------+
+| North  |  483900 |
+| South  |  184000 |
+| West   |  421500 |
+| East   |  169000 |
++--------+---------+
+4 rows in set (0.00 sec)
+
+mysql> select category,count(product) as count
+    -> from sales
+    -> group by category
+    -> having count > 2;
++-------------+-------+
+| category    | count |
++-------------+-------+
+| Electronics |     7 |
+| Furniture   |     6 |
++-------------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select category,avg(unit_price) as avg_price
+    -> from sales
+    -> group by category
+    -> having avg_price < 5000;
+Empty set (0.00 sec)
+
+mysql> select region,count(product) as count
+    -> from sales
+    -> where category = 'Electronics'
+    -> group by region
+    -> having count > 1;
++--------+-------+
+| region | count |
++--------+-------+
+| North  |     3 |
+| East   |     2 |
++--------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select region,sum(units_sold * unit_price) as revenue
+    -> from sales
+    -> group by region
+    -> having revenue > 20000
+    -> order by revenue desc;
++--------+---------+
+| region | revenue |
++--------+---------+
+| North  |  483900 |
+| West   |  421500 |
+| South  |  184000 |
+| East   |  169000 |
++--------+---------+
+4 rows in set (0.00 sec)
+
+mysql> select category,avg(unit_price) as avg_price
+    -> from sales
+    -> group by category
+    -> having avg_price < 5000
+    -> order by avg_price;
+Empty set (0.00 sec)
+
+mysql> select category,sum(units_sold) as total
+    -> from sales
+    -> group by category
+    -> having total > 10
+    -> order by category;
++---------------+-------+
+| category      | total |
++---------------+-------+
+| Electronics   |    72 |
+| Furniture     |    44 |
+| HomeAppliance |    22 |
++---------------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select category,count(product) as count
+    -> from sales
+    -> group by category
+    -> having count > 1
+    -> order by category;
++---------------+-------+
+| category      | count |
++---------------+-------+
+| Electronics   |     7 |
+| Furniture     |     6 |
+| HomeAppliance |     2 |
++---------------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select region,count(product) as count
+    -> from sales
+    -> group by region
+    -> having count > 1
+    -> order by region;
++--------+-------+
+| region | count |
++--------+-------+
+| East   |     3 |
+| North  |     5 |
+| South  |     4 |
+| West   |     3 |
++--------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select category,avg(unit_price) as avg_price
+    -> from sales
+    -> group by category
+    -> having avg_price < 6000
+    -> order by avg_price;
+Empty set (0.00 sec)
+
+mysql> select category,avg(unit_sold) as avg_quan_sold
+    -> from sales
+    -> group by category
+    -> having avg_quan_sold > 5
+    -> order by avg_quan_sold desc;
+ERROR 1054 (42S22): Unknown column 'unit_sold' in 'field list'
+mysql> select category,avg(units_sold) as avg_quan_sold
+    -> from sales
+    -> group by category
+    -> having avg_quan_sold > 5
+    -> order by avg_quan_sold desc;
++---------------+---------------+
+| category      | avg_quan_sold |
++---------------+---------------+
+| HomeAppliance |       11.0000 |
+| Electronics   |       10.2857 |
+| Furniture     |        7.3333 |
++---------------+---------------+
+3 rows in set (0.00 sec)
+
+mysql> select category,sum(units_sold) as total
+    -> from sales
+    -> group by category
+    -> order by categories desc;
+ERROR 1054 (42S22): Unknown column 'categories' in 'order clause'
+mysql> select category,sum(units_sold) as total
+    -> from sales
+    -> group by category
+    -> order by category desc;
++---------------+-------+
+| category      | total |
++---------------+-------+
+| HomeAppliance |    22 |
+| Furniture     |    44 |
+| Electronics   |    72 |
++---------------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select region,avg(unit_price) as avg_price
+    -> from sales
+    -> group by region
+    -> order by region;
++--------+------------+
+| region | avg_price  |
++--------+------------+
+| East   |  5266.6667 |
+| North  | 12100.0000 |
+| South  | 12500.0000 |
+| West   | 23833.3333 |
++--------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select category,sum(units_sold * unit_price) as revenue
+    -> from sales
+    -> group by category
+    -> order by revenue desc;
++---------------+---------+
+| category      | revenue |
++---------------+---------+
+| Electronics   |  768400 |
+| Furniture     |  296000 |
+| HomeAppliance |  194000 |
++---------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select region,count(product) as count
+    -> from sales
+    -> group by region
+    -> order by count desc;
++--------+-------+
+| region | count |
++--------+-------+
+| North  |     5 |
+| South  |     4 |
+| West   |     3 |
+| East   |     3 |
++--------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select region,sum(unit_sold) as total
+    -> from sales
+    -> group by region
+    -> order by region;
+ERROR 1054 (42S22): Unknown column 'unit_sold' in 'field list'
+mysql> select region,sum(units_sold) as total
+    -> from sales
+    -> group by region
+    -> order by region;
++--------+-------+
+| region | total |
++--------+-------+
+| East   |    41 |
+| North  |    51 |
+| South  |    28 |
+| West   |    18 |
++--------+-------+
+4 rows in set (0.00 sec)

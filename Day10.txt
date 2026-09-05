@@ -1,0 +1,109 @@
+Numerical Functions in MySQL:
+
+These are the functions that perform operations on numeric data types. 
+Some of the commonly used numerical functions in MySQL include:
+
+1. ABS(): Returns the absolute value of a number.
+   Example: SELECT ABS(-5); -- Output: 5
+   
+2. CEIL(): Returns the smallest integer greater than or equal to a number.
+   Example: SELECT CEIL(4.2); -- Output: 5
+
+3. FLOOR(): Returns the largest integer less than or equal to a number.
+   Example: SELECT FLOOR(4.8); -- Output: 4
+
+4. ROUND(): Rounds a number to the nearest integer or to a specified number of decimal places.
+   Example: SELECT ROUND(4.567, 2); -- Output: 4.57
+
+5. POWER(): Returns the value of a number raised to the power of another number.
+   Example: SELECT POWER(2, 3); -- Output: 8
+
+6. SQRT(): Returns the square root of a number.
+   Example: SELECT SQRT(16); -- Output: 4 
+
+7. MOD(): Returns the remainder of a division operation.
+   Example: SELECT MOD(10, 3); -- Output: 1
+
+8. LOG(): Returns the natural logarithm of a number.
+   Example: SELECT LOG(10,100); -- Output: 2
+
+9. EXP(): Returns the value of e raised to the power of a number.
+   Example: SELECT EXP(1); -- Output: 2.718281828459045
+
+10. RAND(): Returns a random floating-point value between 0 and 1.
+    Example: SELECT RAND(); -- Output: A random number between 0 and 1 
+
+11.RADIANS(): Converts degrees to radians.
+    Example: SELECT RADIANS(180); -- Output: 3.141592653589793
+
+12. DEGREES(): Converts radians to degrees.
+    Example: SELECT DEGREES(3.141592653589793 or PI()); -- Output: 180
+
+13. SIGN(): Returns the sign of a number: -1 for negative numbers, 0 for zero, and 1 for positive numbers.
+    Example: SELECT SIGN(-10); -- Output: -1
+
+14. GREATEST(): Returns the largest value from a list of numbers.
+    Example: SELECT GREATEST(10, 20, 30); -- Output: 30
+
+15. LEAST(): Returns the smallest value from a list of numbers.
+    Example: SELECT LEAST(10, 20, 30); -- Output: 10
+
+16. BIN(): Converts a decimal number to its binary representation.
+    Example: SELECT BIN(10); -- Output: 1010
+
+17. HEX(): Converts a decimal number to its hexadecimal representation.
+    Example: SELECT HEX(255); -- Output: FF
+
+18. OCT(): Converts a decimal number to its octal representation.
+    Example: SELECT OCT(10); -- Output: 12
+
+String Functions in MySQL:
+
+These are the functions that perform operations on string data types.
+Some of the commonly used string functions in MySQL include:    
+
+1. CONCAT(): Concatenates two or more strings.
+   Example: SELECT CONCAT('Hello', ' ', 'World'); -- Output: Hello World
+
+2. LENGTH(): Returns the length of a string in bytes.
+   Example: SELECT LENGTH('Hello'); -- Output: 5
+
+3. CHAR_LENGTH(): Returns the length of a string in characters.
+   Example: SELECT CHAR_LENGTH('Hello'); -- Output: 5
+
+4. UPPER(): Converts a string to uppercase.
+   Example: SELECT UPPER('hello'); -- Output: HELLO
+
+5. LOWER(): Converts a string to lowercase.
+   Example: SELECT LOWER('HELLO'); -- Output: hello
+
+6. TRIM(): Removes leading and trailing spaces from a string.
+   Example: SELECT TRIM('   Hello World   '); -- Output: Hello World
+
+7. REPLACE(): Replaces occurrences of a substring within a string with another substring.
+   Example: SELECT REPLACE('Hello World', 'World', 'MySQL'); -- Output: Hello MySQL
+
+8. SUBSTRING(): Extracts a substring from a string starting at a specified position.
+   Example: SELECT SUBSTRING('Hello World', 7, 5); -- Output: World 
+
+9. INSTR(): Returns the position of the first occurrence of a substring within a string.
+   Example: SELECT INSTR('Hello World', 'World'); -- Output: 7
+
+10. LEFT(): Returns the leftmost characters from a string.
+    Example: SELECT LEFT('Hello World', 5); -- Output: Hello
+
+11. RIGHT(): Returns the rightmost characters from a string.
+    Example: SELECT RIGHT('Hello World', 5); -- Output: World
+
+12. LENGTH(): Returns the length of a string in bytes.
+    Example: SELECT LENGTH('Hello'); -- Output: 5
+
+13. POSITION(): Returns the position of the first occurrence of a substring within a string.
+    Example: SELECT POSITION('World' IN 'Hello World'); -- Output: 7
+
+14. LPAD(): Pads the left side of a string with a specified character to a specified length.
+    Example: SELECT LPAD('Hello', 10, '*'); -- Output: *****Hello
+
+15. RPAD(): Pads the right side of a string with a specified character to a specified length.
+    Example: SELECT RPAD('Hello', 10, '*'); -- Output: Hello*****
+

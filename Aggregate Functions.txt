@@ -1,0 +1,36 @@
+Aggregate Functions are functions that operate on a collection of values and return a single value. 
+They are commonly used in database queries and data analysis to summarize or aggregate data. 
+They work only on the integer and numeric data types, and they ignore NULL values in their calculations. 
+Aggregate functions are often used in conjunction with the GROUP BY clause to group rows that have 
+the same values in specified columns into summary rows.
+Some common aggregate functions include:
+1. SUM(): Calculates the total sum of a numeric column.
+
+syntax : SELECT SUM(column_name) FROM table_name;
+
+
+2. AVG(): Computes the average value of a numeric column.
+
+syntax : SELECT AVG(column_name) FROM table_name;
+
+
+3. COUNT(): Counts the number of rows in a dataset or the number of non-null values in a column.
+
+syntax : SELECT COUNT(column_name) FROM table_name;
+
+
+4. MIN(): Returns the minimum value from a numeric column.
+
+syntax : SELECT MIN(column_name) FROM table_name;
+
+
+5. MAX(): Returns the maximum value from a numeric column.
+
+syntax : SELECT MAX(column_name) FROM table_name;
+
+
+6. GROUP_CONCAT(): Concatenates values from a group into a single string.   
+
+syntax : SELECT GROUP_CONCAT(column_name) FROM table_name;
+
+
